@@ -1,0 +1,29 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "Вычислитель отличий - cравнивает два файла конфигурации и показывает разницу.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiggRabbid/frontend-project-46.git"
+  },
+  "author": "MiggRabbid",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MiggRabbid/frontend-project-46/issues"
+  },
+  "homepage": "https://github.com/MiggRabbid/frontend-project-46#readme",
+  "devDependencies": {
+    "commander": "^11.0.0",
+    "eslint": "^8.47.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.28.1"
+  },
+  "dependencies": {
+    "commander": "^11.0.0"
+  }
+}
