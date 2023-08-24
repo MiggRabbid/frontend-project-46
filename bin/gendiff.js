@@ -30,8 +30,7 @@ const genDiff = (file1, file2) => {
 program
   .version('1.0.0')
   .description('Compares two configuration files and shows a difference.')
-  .argument('<filepath1>')
-  .argument('<filepath2>')
+  .argument('<filepath1> <filepath2>')
   .helpOption('-h, --help', 'output usage information')
   .option('-f, --format <type>', 'output format')
   .action((filepath1, filepath2) => {
@@ -41,3 +40,5 @@ program
   });
 
 program.parse();
+
+export default genDiff;
