@@ -8,6 +8,6 @@ program
   .arguments('<filepath1> <filepath2>')
   .helpOption('-h, --help', 'output usage information')
   .option('-f, --format <type>', 'output format')
-  .action((filepath1, filepath2) => genDiff(filepath1, filepath2));
+  .action((type, filepath1, filepath2) => genDiff(type, filepath1, filepath2));
 
 program.parse();
