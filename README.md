@@ -12,30 +12,48 @@
  - Поддержка разных входных форматов: yaml, json;
  - Генерация отчета в виде plain text, stylish и json.
 
-
- #### Пример использования:
+ ## Пример использования
+ ### Вызов стправочной информации:
  ```
-# формат plain
-gendiff --format plain path/to/file.yml another/path/file.json
+gendiff -h
 
-Property 'common.follow' was added with value: false
-Property 'group1.baz' was updated. From 'bas' to 'bars'
-Property 'group2' was removed
+Usage: gendiff [options] <filepath1> <filepath2>
 
-# формат stylish
-gendiff filepath1.json filepath2.json
+  Compares two configuration files and shows a
+difference.
+
+  Options:
+    -V, --version        output the version number
+    -f, --format <type>  output format
+    -h, --help           output usage information
+```
+[![asciicast](https://asciinema.org/a/604451.svg)](https://asciinema.org/a/604451)
+
+ ### запуск вычислителя отличий:
+ ```
+gendiff ./data/file1.json ./data/file2.json
 
 {
-  + follow: false
-    setting1: Value 1
-  - setting2: 200
-  - setting3: true
-  + setting3: {
-        key: value
-    }
-  + setting4: blah blah
-  + setting5: {
-        key5: value5
-    }
+  - follow: false
+    host: hexlet.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
 }
 ```
+[![asciicast](https://asciinema.org/a/604452.svg)](https://asciinema.org/a/604452)
+
+
+## Порядок установки и системные требования
+### Порядок установки:
+```
+git clone git@github.com:MiggRabbid/frontend-project-46.git
+cd frontend-project-46
+make install
+npm install
+npm link
+```
+
+### Системные требования:
+Node.js v20.2.0
