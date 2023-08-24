@@ -17,7 +17,7 @@
  ```
 gendiff -h
 
-Usage: gendiff [options] <filepath1> <filepath2>
+  Usage: gendiff [options] <filepath1> <filepath2>
 
   Compares two configuration files and shows a
 difference.
@@ -29,7 +29,7 @@ difference.
 ```
 [![asciicast](https://asciinema.org/a/604451.svg)](https://asciinema.org/a/604451)
 
- ### запуск вычислителя отличий:
+ ### Запуск вычислителя отличий:
  ```
 gendiff ./data/file1.json ./data/file2.json
 
