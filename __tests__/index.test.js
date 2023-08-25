@@ -35,7 +35,6 @@ const tree2 = {
   key5: { value: 'volue5', symbol: '/' },
 };
 
-
 test('test readFile()', () => {
   const expected = {
     key5: 'volue5',
@@ -69,6 +68,8 @@ test('test genDiffTree()', () => {
 });
 
 test('test genDiffTree() throw new Error', () => {
-  const expected = 'Unknown symbol: /!';
-  expect(genDiffString(tree2)).toBe(expected);
+  function diffString() {
+    genDiffString(tree2);
+  }
+  expect(diffString).toThrow('Unknown symbol: /!');
 });

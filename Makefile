@@ -18,3 +18,8 @@ test-coverage:
 
 gendiff:
 	node bin/gendiff.js
+
+letsgit:
+	git add -A
+	git commit -m
+	git push
