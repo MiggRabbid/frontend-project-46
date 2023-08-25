@@ -13,7 +13,6 @@
  - Генерация отчета в виде plain text, stylish и json.
 
 
-
  ## Пример использования
  ### Вызов стправочной информации:
  ```
@@ -45,7 +44,6 @@ gendiff ./data/file1.json ./data/file2.json
 }
 ```
 [![asciicast](https://asciinema.org/a/604452.svg)](https://asciinema.org/a/604452)
-
 
 
 ## Порядок установки и системные требования

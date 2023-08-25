@@ -1,35 +1,50 @@
 import _ from 'lodash';
 import readFile from './utils.js';
 
+const genDiffTree = (file1, file2) => {
+  let keysFromFiles = Object.keys(file1)
+    .concat(Object.keys(file2))
+    .sort();
+  keysFromFiles = keysFromFiles.filter((key, index) => keysFromFiles.indexOf(key) === index);
+  const deffTree = {};
+
+  keysFromFiles.map((key) => {
+    if (_.has(file1, key) && _.has(file2, key) && _.isEqual(file1[key], file2[key])) {
+      deffTree[key] = {
+        value: file1[key],
+        symbol: 'spase',
+      };
+    } else if (_.has(file1, key) && _.has(file2, key) && !_.isEqual(file1[key], file2[key])) {
+      deffTree[key] = {
+        value1: file1[key],
+        value2: file2[key],
+        symbol1: 'minus',
+        symbol2: 'plus',
+      };
+    } else if (_.has(file1, key) && !_.has(file2, key)) {
+      deffTree[key] = {
+        value1: file1[key],
+        symbol1: 'minus',
+      };
+    } else if (!_.has(file1, key) && _.has(file2, key)) {
+      deffTree[key] = {
+        value2: file2[key],
+        symbol2: 'plus',
+      };
+    }
+    return deffTree;
+  });
+
+  return deffTree;
+};
+
 const genDiff = (filepath1, filepath2) => {
   const file1 = readFile(filepath1);
   const file2 = readFile(filepath2);
 
-  const keysFromFile1 = Object.keys(file1).sort();
-  const keysFromFile2 = Object.keys(file2).sort();
+  const result = genDiffTree(file1, file2);
 
-  let result = '{';
-
-  keysFromFile1.map((key) => {
-    if (keysFromFile2.includes(key) && _.isEqual(file1[key], file2[key])) {
-      result = `${result}\n    ${key}: ${file1[key]}`;
-    } else if (keysFromFile2.includes(key) && !_.isEqual(file1[key], file2[key])) {
-      result = `${result}\n  - ${key}: ${file1[key]}`;
-      result = `${result}\n  + ${key}: ${file2[key]}`;
-    } else if (!keysFromFile2.includes(key)) {
-      result = `${result}\n  - ${key}: ${file1[key]}`;
-    }
-    return result;
-  });
-
-  keysFromFile2.map((key) => {
-    if (!keysFromFile1.includes(key)) {
-      result = `${result}\n  + ${key}: ${file2[key]}`;
-    }
-    return result;
-  });
-
-  return console.log(`${result}\n}`);
+  return console.log(result);
 };
 
 export default genDiff;
