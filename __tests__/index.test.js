@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
 import genDiff, { genDiffTree, genDiffString } from '../src/index.js';
 import readFile from '../src/utils.js';
 
-const filepath1 = './__tests__/file1.test.json';
-const filepath2 = './__tests__/file2.test.json';
+const filepath1 = './__fixtures__/file1.test.json';
+const filepath2 = './__fixtures__/file2.test.json';
 
 const file1 = {
   key5: 'volue5',

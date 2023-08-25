@@ -11,15 +11,10 @@ fix:
 	npx eslint --fix .
 
 test:
-	NODE_OPTIONS=--experimental-vm-modules npx jest
+	npm test
 
 test-coverage:
-	NODE_OPTIONS=--experimental-vm-modules npx jest --coverage
+	npm test -- --coverage --coverageProvider=v8
 
 gendiff:
 	node bin/gendiff.js
-
-letsgit:
-	git add -A
-	git commit -m
-	git push
