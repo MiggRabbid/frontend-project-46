@@ -11,11 +11,3 @@ program
   .action((filepath1, filepath2) => genDiff(filepath1, filepath2));
 
 program.parse();
-
-// {
-//   follow: { value: false, symbol: 'minus' },
-//   host: { value: 'hexlet.io', symbol: 'spase' },
-//   proxy: { value: '123.234.53.22', symbol: 'minus' },
-//   timeout: { value1: 50, value2: 20, symbol: 'minus&plus' },
-//   verbose: { value: true, symbol: 'plus' }
-// }
