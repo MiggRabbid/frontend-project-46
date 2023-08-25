@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1692969551751" clover="3.2.0">
+  <project timestamp="1692969551751" name="All files">
+    <metrics statements="34" coveredstatements="34" conditionals="23" coveredconditionals="22" methods="7" coveredmethods="7" elements="64" coveredelements="63" complexity="0" loc="34" ncloc="34" packages="1" files="2" classes="2"/>
+    <file name="index.js" path="/root/IT/frontend-project-46/src/index.js">
+      <metrics statements="33" coveredstatements="33" conditionals="23" coveredconditionals="22" methods="6" coveredmethods="6"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="5" count="2" type="stmt"/>
+      <line num="8" count="16" type="stmt"/>
+      <line num="10" count="2" type="stmt"/>
+      <line num="12" count="2" type="stmt"/>
+      <line num="13" count="12" type="cond" truecount="5" falsecount="0"/>
+      <line num="14" count="2" type="stmt"/>
+      <line num="18" count="10" type="cond" truecount="5" falsecount="0"/>
+      <line num="19" count="2" type="stmt"/>
+      <line num="24" count="8" type="cond" truecount="4" falsecount="0"/>
+      <line num="25" count="4" type="stmt"/>
+      <line num="29" count="4" type="cond" truecount="3" falsecount="1"/>
+      <line num="30" count="4" type="stmt"/>
+      <line num="35" count="12" type="stmt"/>
+      <line num="38" count="2" type="stmt"/>
+      <line num="41" count="1" type="stmt"/>
+      <line num="42" count="3" type="stmt"/>
+      <line num="44" count="3" type="stmt"/>
+      <line num="45" count="18" type="stmt"/>
+      <line num="46" count="18" type="cond" truecount="5" falsecount="0"/>
+      <line num="48" count="3" type="stmt"/>
+      <line num="50" count="5" type="stmt"/>
+      <line num="52" count="6" type="stmt"/>
+      <line num="54" count="3" type="stmt"/>
+      <line num="56" count="1" type="stmt"/>
+      <line num="60" count="2" type="stmt"/>
+      <line num="63" count="1" type="stmt"/>
+      <line num="64" count="1" type="stmt"/>
+      <line num="65" count="1" type="stmt"/>
+      <line num="67" count="1" type="stmt"/>
+      <line num="68" count="1" type="stmt"/>
+      <line num="70" count="1" type="stmt"/>
+      <line num="71" count="1" type="stmt"/>
+    </file>
+    <file name="utils.js" path="/root/IT/frontend-project-46/src/utils.js">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <line num="3" count="3" type="stmt"/>
+    </file>
+  </project>
+</coverage>

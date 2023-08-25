@@ -1,10 +1,7 @@
 import _ from 'lodash';
 import readFile from './utils.js';
 
-const genDiffTree = (filepath1, filepath2) => {
-  const file1 = readFile(filepath1);
-  const file2 = readFile(filepath2);
-
+const genDiffTree = (file1, file2) => {
   let keysFromFiles = Object.keys(file1)
     .concat(Object.keys(file2))
     .sort();
@@ -56,7 +53,7 @@ const genDiffString = (tree) => {
       case '-+':
         return `${acc}  - ${key}: ${tree[key].value1}\n  + ${key}: ${tree[key].value2}\n`;
       default:
-        throw new Error(`Unknown symbol: '${symbol}'!`);
+        throw new Error(`Unknown symbol: ${symbol}!`);
     }
   }, '');
 
@@ -64,7 +61,10 @@ const genDiffString = (tree) => {
 };
 
 const genDiff = (filepath1, filepath2) => {
-  const deffTree = genDiffTree(filepath1, filepath2);
+  const file1 = readFile(filepath1);
+  const file2 = readFile(filepath2);
+
+  const deffTree = genDiffTree(file1, file2);
   const deffString = genDiffString(deffTree);
 
   console.log(deffString);
@@ -72,3 +72,4 @@ const genDiff = (filepath1, filepath2) => {
 };
 
 export default genDiff;
+export { genDiffTree, genDiffString };
