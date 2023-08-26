@@ -52,14 +52,7 @@ test('test genDiff()', () => {
 });
 
 test('test genDiffTree()', () => {
-  const expected = {
-    key0: { value: 'volue0', symbol: '+' },
-    key1: { value: 'volue1', symbol: '+' },
-    key2: { value: 'volue2', symbol: ' ' },
-    key3: { value1: 'volue3.1', value2: 'volue3.2', symbol: '-+' },
-    key4: { value: 'volue4', symbol: '-' },
-    key5: { value: 'volue5', symbol: '-' },
-  };
+  const expected = tree;
   expect(genDiffTree(file1, file2)).toEqual(expected);
 });
 

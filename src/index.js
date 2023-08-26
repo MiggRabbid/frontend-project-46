@@ -2,9 +2,7 @@ import _ from 'lodash';
 import readFile from './utils.js';
 
 const genDiffTree = (file1, file2) => {
-  let keysFromFiles = Object.keys(file1)
-    .concat(Object.keys(file2))
-    .sort();
+  let keysFromFiles = Object.keys(file1).concat(Object.keys(file2)).sort();
   keysFromFiles = keysFromFiles.filter((key, index) => keysFromFiles.indexOf(key) === index);
 
   const deffTree = {};
