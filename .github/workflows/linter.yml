@@ -1,4 +1,4 @@
-name: 'Linter'
+name: 'Test coverage'
 
 on:
   - push
@@ -32,9 +32,5 @@ jobs:
     - name: Run linter
     
       uses: paambaati/codeclimate-action@v3.2.0
-      
-    #   env:
-        # CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-      with:
-          coverageCommand: npx eslint .
-          debug: true
+      run:
+        make lint
