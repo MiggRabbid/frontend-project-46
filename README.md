@@ -1,6 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/MiggRabbid/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/MiggRabbid/frontend-project-46/actions)
 [![Test coverage](https://github.com/MiggRabbid/frontend-project-46/actions/workflows/tests.yml/badge.svg)](https://github.com/MiggRabbid/frontend-project-46/actions/workflows/tests.yml)
+[![ESLint check](https://github.com/MiggRabbid/frontend-project-46/actions/workflows/linter.yml/badge.svg)](https://github.com/MiggRabbid/frontend-project-46/actions/workflows/linter.yml)
 
 ### Maintainability and Test Coverage from Codeclimate.com:
 [![Maintainability](https://api.codeclimate.com/v1/badges/62a34a4f7555c071a64d/maintainability)](https://codeclimate.com/github/MiggRabbid/frontend-project-46/maintainability)
