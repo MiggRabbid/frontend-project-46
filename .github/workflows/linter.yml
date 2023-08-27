@@ -1,0 +1,40 @@
+name: 'Linter'
+
+on:
+  - push
+  - pull_request
+  
+env:
+  CI: true
+
+jobs:
+  build:
+
+    runs-on:  ubuntu-latest
+
+    strategy:
+      matrix: 
+        node-version: [20.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: npm install
+      run: |
+        make install
+      env:
+        CI: true
+    - name: Run linter
+    
+      uses: paambaati/codeclimate-action@v3.2.0
+      
+    #   env:
+        # CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      with:
+          coverageCommand: npx eslint .
+          debug: true
