@@ -45,7 +45,7 @@ gendiff ./data/file1.json ./data/file2.json
   + verbose: true
 }
 ```
-[![asciicast](https://asciinema.org/a/604452.svg)](https://asciinema.org/a/604452)
+[![asciicast](https://asciinema.org/a/605054.svg)](https://asciinema.org/a/605054)
 
 
 ## Порядок установки и системные требования

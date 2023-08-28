@@ -17,7 +17,6 @@ const genDiffTree = (file1, file2) => {
     }
     return diffTree;
   });
-  console.log(diffTree);
   return diffTree;
 };
 
