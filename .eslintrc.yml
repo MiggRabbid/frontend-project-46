@@ -13,5 +13,9 @@ parserOptions:
 
 rules: {
   no-console: 0,
-  import/extensions: 0
+  import/extensions: 0,
+  no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }],
+  consistent-return: 0,
+  array-callback-return: 0,
+  no-else-return: 0,
 }
