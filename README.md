@@ -1,25 +1,25 @@
-### Hexlet tests and linter status:
+#### Hexlet-check, tests and linter status:
 [![Actions Status](https://github.com/MiggRabbid/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/MiggRabbid/frontend-project-46/actions)
 [![Test coverage](https://github.com/MiggRabbid/frontend-project-46/actions/workflows/tests.yml/badge.svg)](https://github.com/MiggRabbid/frontend-project-46/actions/workflows/tests.yml)
 [![ESLint check](https://github.com/MiggRabbid/frontend-project-46/actions/workflows/linter.yml/badge.svg)](https://github.com/MiggRabbid/frontend-project-46/actions/workflows/linter.yml)
 
-### Maintainability and Test Coverage from Codeclimate.com:
+#### Maintainability and Test Coverage from Codeclimate.com:
 [![Maintainability](https://api.codeclimate.com/v1/badges/62a34a4f7555c071a64d/maintainability)](https://codeclimate.com/github/MiggRabbid/frontend-project-46/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/62a34a4f7555c071a64d/test_coverage)](https://codeclimate.com/github/MiggRabbid/frontend-project-46/test_coverage)
-
+---
 
 # «Вычислитель отличий»
 Вычислитель отличий – программа, определяющая разницу между двумя структурами данных.
 Это популярная задача, для решения которой существует множество онлайн сервисов, например http://www.jsondiff.com/. Подобный механизм используется при выводе тестов или при автоматическом отслеживании изменений в конфигурационных файлах.
 
-#### Возможности утилиты:
+##### Возможности утилиты:
  - Поддержка разных входных форматов: yaml, json;
  - Генерация отчета в виде plain text, stylish и json.
  - По-умолчанию срабатывает встроенный форматер "Stylish"
 
-
- ## Пример использования
- ### Вызов стправочной информации:
+---
+## Пример использования
+##### Вызов стправочной информации:
  ```
 gendiff -h
 
@@ -35,7 +35,7 @@ difference.
 ```
 [![asciicast](https://asciinema.org/a/604451.svg)](https://asciinema.org/a/604451)
 
- ### Запуск вычислителя отличий:
+##### Запуск вычислителя отличий:
  ```
 gendiff ./data/file1.json ./data/file2.json
 //or gendiff -f <formater> ./data/file1.json ./data/file2.json
@@ -51,9 +51,9 @@ gendiff ./data/file1.json ./data/file2.json
 ```
 [![asciicast](https://asciinema.org/a/605410.svg)](https://asciinema.org/a/605410)
 
-
+---
 ## Порядок установки и системные требования
-### Порядок установки:
+##### Порядок установки:
 ```
 git clone git@github.com:MiggRabbid/frontend-project-46.git
 cd frontend-project-46
@@ -62,6 +62,6 @@ npm install
 npm link
 ```
 
-### Системные требования:
+##### Системные требования:
 Node.js v20.2.0
 Commander.JS v11.0.0
