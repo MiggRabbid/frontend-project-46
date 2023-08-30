@@ -33,8 +33,10 @@ difference.
 [![asciicast](https://asciinema.org/a/604451.svg)](https://asciinema.org/a/604451)
 
  ### Запуск вычислителя отличий:
+ По-умолчанию срабатывает встроенный форматер "Stylish"
  ```
 gendiff ./data/file1.json ./data/file2.json
+//or gendiff -f <formater> ./data/file1.json ./data/file2.json
 
 {
   - follow: false
@@ -45,7 +47,7 @@ gendiff ./data/file1.json ./data/file2.json
   + verbose: true
 }
 ```
-[![asciicast](https://asciinema.org/a/605054.svg)](https://asciinema.org/a/605054)
+[![asciicast](https://asciinema.org/a/605410.svg)](https://asciinema.org/a/605410)
 
 
 ## Порядок установки и системные требования
@@ -60,3 +62,4 @@ npm link
 
 ### Системные требования:
 Node.js v20.2.0
+[![Commander.JS](http://img.shields.io/npm/v/commander.svg?style=flat)](https://www.npmjs.org/package/commander)
