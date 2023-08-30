@@ -2,5 +2,26 @@
     timeout: 20,
     verbose: true,
     host: "hexlet.io",
-    isYaml: true
+    isYaml: true,
+    withChildren: {
+        children1: '----'
+    },
+    setting6: {
+        key: "value",
+        ops: "vops",
+        doge: {
+            wow: "so much",
+            key555: {
+                key666: 'somethink'
+            }
+        }
+    },
+    group3: {
+        deep: {
+            id: {
+                number": 45
+            }
+        },
+        fee: 100500
+    }
 }

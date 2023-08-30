@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import readFile from './parsers.js';
-import genDiffString from './stylish.js';
+import stylish from './stylish.js';
 
 const genDiffTree = (file1, file2) => {
   let keysFromFiles = Object.keys(file1).concat(Object.keys(file2)).sort();
@@ -66,16 +66,13 @@ const genDiffTree = (file1, file2) => {
   return diffTree;
 };
 
-const genDiff = (filepath1, filepath2) => {
+const genDiff = (filepath1, filepath2, type) => {
   const file1 = readFile(filepath1);
   const file2 = readFile(filepath2);
   const diffTree = genDiffTree(file1, file2);
-  console.log('------------------------------------------------');
-  console.log(JSON.stringify(diffTree, 1, ' '));
-  console.log('------------------------------------------------');
-  const diffString = genDiffString(diffTree);
-  console.log(diffString);
-  return diffString;
+  if (type === 'stylish') {
+    return stylish(diffTree);
+  }
 };
 
 export default genDiff;

@@ -48,6 +48,7 @@ const genDiffString = (diffTree) => {
   };
 
   const diffString = iter(diffTree, 1);
+  console.log(diffString);
   return diffString;
 };
 

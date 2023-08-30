@@ -17,56 +17,6 @@ const filepathJson2 = getFixturePath('file4.test.json');
 const filepathJson3 = getFixturePath('file5.test.json');
 const filepathJson4 = getFixturePath('file6.test.json');
 
-test('test readFile() for YAML', () => {
-  const expected1 = {
-    key5: 'volue5',
-    key4: 'volue4',
-    key3: 'volue3.1',
-    key2: 'volue2',
-    isYaml: true,
-  };
-  expect(readFile(filepathYaml1)).toEqual(expected1);
-
-  const expected2 = {
-    key3: 'volue3.2',
-    key2: 'volue2',
-    key1: 'volue1',
-    key0: 'volue0',
-    isYaml: true,
-  };
-  expect(readFile(filepathYaml2)).toEqual(expected2);
-});
-
-test('test readFile() for JSON', () => {
-  const expected = {
-    common: {
-      setting1: 'Value 1',
-      setting2: 200,
-      setting3: true,
-      setting6: {
-        key: 'value',
-        doge: {
-          wow: '',
-        },
-      },
-    },
-    group1: {
-      baz: 'bas',
-      foo: 'bar',
-      nest: {
-        key: 'value',
-      },
-    },
-    group2: {
-      abc: 12345,
-      deep: {
-        id: 45,
-      },
-    },
-  };
-  expect(readFile(filepathJson1)).toEqual(expected);
-});
-
 test('test genDiff()', () => {
   const expected = `{
     common: {
@@ -112,26 +62,70 @@ test('test genDiff()', () => {
         fee: 100500
     }
 }`;
-  expect(genDiff(filepathJson1, filepathJson2)).toBe(expected);
+  expect(genDiff(filepathJson1, filepathJson2, 'stylish')).toBe(expected);
 });
 
 test('test readFile() for YAML', () => {
+  console.log(filepathYaml1);
   const expected1 = {
     key5: 'volue5',
     key4: 'volue4',
     key3: 'volue3.1',
-    key2: 'volue2',
+    key2: {
+      key22: 'volue2',
+    },
+    withChildren: {
+      children1: '----',
+    },
     isYaml: true,
   };
   expect(readFile(filepathYaml1)).toEqual(expected1);
+
   const expected2 = {
     key3: 'volue3.2',
-    key2: 'volue2',
+    key2: {
+      key22: 'volue2',
+    },
     key1: 'volue1',
     key0: 'volue0',
     isYaml: true,
+    withChildren: {
+      children1: {
+        children2: '+++',
+      },
+    },
   };
   expect(readFile(filepathYaml2)).toEqual(expected2);
+});
+
+test('test readFile() for JSON', () => {
+  const expected = {
+    common: {
+      setting1: 'Value 1',
+      setting2: 200,
+      setting3: true,
+      setting6: {
+        key: 'value',
+        doge: {
+          wow: '',
+        },
+      },
+    },
+    group1: {
+      baz: 'bas',
+      foo: 'bar',
+      nest: {
+        key: 'value',
+      },
+    },
+    group2: {
+      abc: 12345,
+      deep: {
+        id: 45,
+      },
+    },
+  };
+  expect(readFile(filepathJson1)).toEqual(expected);
 });
 
 test('test readFile() for JSON', () => {

@@ -3,5 +3,18 @@
     timeout: 50,
     proxy: "123.234.53.22",
     follow: false,
-    isYaml: true
+    isYaml: true,
+    withChildren: {
+    children1: {
+        children2: '+++'
+        }
+    },
+    group3: {
+        deep: {
+            id: {
+                number: 45
+            }
+        },
+        fee: 100500
+    }
 }
