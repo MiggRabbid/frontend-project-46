@@ -6,8 +6,8 @@
 #### Maintainability and Test Coverage from Codeclimate.com:
 [![Maintainability](https://api.codeclimate.com/v1/badges/62a34a4f7555c071a64d/maintainability)](https://codeclimate.com/github/MiggRabbid/frontend-project-46/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/62a34a4f7555c071a64d/test_coverage)](https://codeclimate.com/github/MiggRabbid/frontend-project-46/test_coverage)
----
 
+---
 # «Вычислитель отличий»
 Вычислитель отличий – программа, определяющая разницу между двумя структурами данных.
 Это популярная задача, для решения которой существует множество онлайн сервисов, например http://www.jsondiff.com/. Подобный механизм используется при выводе тестов или при автоматическом отслеживании изменений в конфигурационных файлах.
