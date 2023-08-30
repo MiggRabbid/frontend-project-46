@@ -62,4 +62,4 @@ npm link
 
 ### Системные требования:
 Node.js v20.2.0
-[![Commander.JS](http://img.shields.io/npm/v/commander.svg?style=flat)](https://www.npmjs.org/package/commander)
+Commander.JS v11.0.0
