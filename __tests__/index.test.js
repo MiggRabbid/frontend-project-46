@@ -2,9 +2,10 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
-import genDiff, { genDiffTree } from '../src/index.js';
+import genDiff, { getFormattedDiff } from '../src/index.js';
 import readFile from '../src/parsers.js';
-import genDiffString from '../src/stylish.js';
+import genDiffTree from '../src/gendifftree.js';
+import stylish from '../src/formatters/stylish.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -456,7 +457,7 @@ test('test genDiffTree() for JSON', () => {
   expect(genDiffTree(fileJson3, fileJson4)).toEqual(expected2);
 });
 
-test('test genDiffString()', () => {
+test('test formater Stylish', () => {
   const expected1 = `{
     common: {
       + follow: false
@@ -501,7 +502,7 @@ test('test genDiffString()', () => {
         fee: 100500
     }
 }`;
-  expect(genDiffString(treeJson1)).toBe(expected1);
+  expect(stylish(treeJson1)).toBe(expected1);
   const expected2 = `{
     common: {
       + follow: false
@@ -546,7 +547,7 @@ test('test genDiffString()', () => {
         fee: 100500
     }
 }`;
-  expect(genDiffString(treeJson2)).toBe(expected2);
+  expect(stylish(treeJson2)).toBe(expected2);
 });
 
 const treeJson3 = {
@@ -675,9 +676,16 @@ const treeJson3 = {
   },
 };
 
-test('test genDiffString() throw new Error', () => {
+test('test getFormattedDiff() throw new Error', () => {
+  function getDiff() {
+    getFormattedDiff(treeJson1, 'undefined');
+  }
+  expect(getDiff).toThrow('Unknown formatter: undefined!');
+});
+
+test('test formatter "Stylish" throw new Error', () => {
   function diffString() {
-    genDiffString(treeJson3);
+    stylish(treeJson3);
   }
   expect(diffString).toThrow('Unknown symbol: /!');
 });
