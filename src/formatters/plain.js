@@ -1,118 +1,92 @@
 // eslint-disable-next-line no-unused-vars
-// import _ from 'lodash';
+import _ from 'lodash';
 
-// const getConcat = (currentString, path, symbol, value) => {
-//   let currentValue = value;
-//   let valueFirst;
-//   let valueSecond;
-//   if (typeof value === 'string') {
-//     currentValue = `'${value}'`;
-//   }
+const getConcat = (currentString, path, symbol, value) => {
+  let currentValue = value;
+  let valueFirst;
+  let valueSecond;
+  if (typeof value === 'string' && value !== '[complex value]') {
+    currentValue = `'${value}'`;
+  }
 
-//   if (symbol === '-+') {
-//     [valueFirst, valueSecond] = value;
-//     if (typeof valueFirst === 'string') {
-//       valueFirst = `'${valueFirst}'`;
-//     }
-//     if (typeof valueSecond === 'string') {
-//       valueSecond = `'${valueSecond}'`;
-//     }
-//   }
-//   switch (symbol) {
-//     case '':
-//       return currentString;
-//     case '-':
-//       return `${currentString}\nProperty '${path}' was removed`;
-//     case '+':
-//       return `${currentString}\nProperty '${path}' was added with value: ${currentValue}`;
-//     case '-+':
-// eslint-disable-next-line max-len
-//       return `${currentString}\nProperty '${path}' was updated. From ${valueFirst} to ${valueSecond}`;
-//     default:
-//       throw new Error(`Unknown symbol: ${symbol}!`);
-//   }
-// };
+  if (symbol === '-+') {
+    [valueFirst, valueSecond] = value;
+    if (typeof valueFirst === 'string' && valueFirst !== '[complex value]') {
+      valueFirst = `'${valueFirst}'`;
+    }
+    if (typeof valueSecond === 'string' && valueSecond !== '[complex value]') {
+      valueSecond = `'${valueSecond}'`;
+    }
+  }
+  switch (symbol) {
+    case null:
+      return currentString;
+    case '-':
+      return `${currentString}\nProperty '${path}' was removed`;
+    case '+':
+      return `${currentString}\nProperty '${path}' was added with value: ${currentValue}`;
+    case '-+':
+      return `${currentString}\nProperty '${path}' was updated. From ${valueFirst} to ${valueSecond}`;
+    default:
+      throw new Error(`\nUnknown symbol: ${symbol}!`);
+  }
+};
 
-// const plain = (diffTree) => {
-//   const iter = (tree, path = '', currentString = '') => {
-//     const keys = Object.keys(tree);
-//     let string = currentString;
-//     string = keys.reduce((acc, key) => {
-//       let currentPath;
-//       if (path === '') {
-//         currentPath = `${key}`;
-//       } else {
-//         currentPath = `${path}.${key}`;
-//       }
-//       const { symbol } = tree[key];
-//       console.log('key         -', key);
-//       console.log('currentPath -', currentPath);
-//       if (_.has(tree[key], 'value') && _.isObject(tree[key].value)) {
-//         if (tree[key].value.symbol === '') {
-//           const temp = getConcat(acc, currentPath, symbol, '[complex value]');
-//           console.log('Валью это объект, есть Символ ""');
-//           console.log(temp.replace('\n', ''));
-//           console.log('-------------------------------------------------------');
-//           return temp;
-//         }
-//         const currentValue = iter(tree[key].value, currentPath, currentString);
-//         const temp = getConcat(acc, currentPath, symbol, currentValue);
-//         console.log('Валью это объект');
-//         console.log(temp.replace('\n', ''));
-//         console.log('-------------------------------------------------------');
-//         return temp;
-//       }
-//       if (_.has(tree[key], 'value1') && _.isObject(tree[key].value1)) {
-//         const valueFirst = iter(tree[key].value1, currentPath, currentString);
-//         const valueSecond = tree[key].value2;
-//         const temp = getConcat(acc, currentPath, symbol, [valueFirst, valueSecond]);
-//         console.log('есть Валью1 и это объект');
-//         console.log(temp.replace('\n', ''));
-//         console.log('-------------------------------------------------------');
-//         return temp;
-//       }
-//       if (_.has(tree[key], 'value2') && _.isObject(tree[key].value2)) {
-//         const valueFirst = tree[key].value1;
-//         const valueSecond = iter(tree[key].value2, currentPath, currentString);
-//         const temp = getConcat(acc, currentPath, symbol, [valueFirst, valueSecond]);
-//         console.log('есть Валью2 и это объект');
-//         console.log(temp.replace('\n', ''));
-//         console.log('-------------------------------------------------------');
-//         return temp;
-//       }
-//       if (symbol === '-+') {
-//         const valueFirst = tree[key].value1;
-//         const valueSecond = tree[key].value2;
-//         const temp = getConcat(acc, currentPath, symbol, [valueFirst, valueSecond]);
-//         console.log('Несработали предыдущие 3, но есть Символ "-+"');
-//         console.log(temp.replace('\n', ''));
-//         console.log('-------------------------------------------------------');
-//         return temp;
-//       }
-//       const currentValue = tree[key].value;
-//       const temp = getConcat(acc, currentPath, symbol, currentValue);
-//       console.log('Несработали предыдущие 4');
-//       console.log(temp.replace('\n', ''));
-//       console.log('-------------------------------------------------------');
-//       return temp;
-//     }, '');
-//     return string;
-//   };
+const plain = (diffTree) => {
+  const iter = (tree, path = '', currentString = '') => {
+    const keys = Object.keys(tree);
+    const result = keys.reduce((acc, key) => {
+      let currentPath;
+      const { symbol } = tree[key];
 
-//   const diffString = iter(diffTree);
-//   return diffString.replace('\n', '');
-// };
+      if (path === '') {
+        currentPath = `${key}`;
+      } else {
+        currentPath = `${path}.${key}`;
+      }
 
-// export default plain;
+      const currentValue = tree[key].value;
+      if (symbol === '-') {
+        return getConcat(acc, currentPath, symbol, currentValue);
+      }
 
-// Property 'common.follow' was added with value: false
-// Property 'common.setting2' was removed
-// Property 'common.setting3' was updated. From true to null
-// Property 'common.setting4' was added with value: 'blah blah'
-// Property 'common.setting5' was added with value: [complex value]
-// Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
-// Property 'common.setting6.ops' was added with value: 'vops'
-// Property 'group1.baz' was updated. From 'bas' to 'bars'
-// Property 'group1.nest' was updated. From [complex value] to 'str'
-// Property 'group2' was removed
-// Property 'group3' was added with value: [complex value]
+      if (symbol === '+') {
+        if (_.isObject(currentValue)) {
+          return getConcat(acc, currentPath, symbol, '[complex value]');
+        } else {
+          return getConcat(acc, currentPath, symbol, currentValue);
+        }
+      }
+
+      if (symbol === null) {
+        if (_.isObject(currentValue)) {
+          const tempAcc = iter(tree[key].value, currentPath, acc);
+          return getConcat(tempAcc, currentPath, symbol, currentValue);
+        } else {
+          return getConcat(acc, currentPath, symbol, currentValue);
+        }
+      }
+
+      if (symbol === '-+') {
+        if (_.isObject(tree[key].value1)) {
+          const arrValue = ['[complex value]', tree[key].value2];
+          return getConcat(acc, currentPath, symbol, arrValue);
+        }
+        if (_.isObject(tree[key].value2)) {
+          const arrValue = [tree[key].value1, '[complex value]'];
+          return getConcat(acc, currentPath, symbol, arrValue);
+        } else {
+          const arrValue = [tree[key].value1, tree[key].value2];
+          return getConcat(acc, currentPath, symbol, arrValue);
+        }
+      }
+    }, currentString);
+
+    return result;
+  };
+
+  const diffString = iter(diffTree).replace('\n', '');
+  return diffString;
+};
+
+export default plain;

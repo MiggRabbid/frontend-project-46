@@ -7,7 +7,7 @@ const getConcat = (acc, tab, depth, symbol, key, value) => {
   let plus;
 
   switch (symbol) {
-    case '':
+    case null:
       return `${acc}${tab.repeat(depth + 1)}${key}: ${value}\n`;
     case '-':
     case '+':
