@@ -12,14 +12,18 @@
 Вычислитель отличий – программа, определяющая разницу между двумя структурами данных.
 Это популярная задача, для решения которой существует множество онлайн сервисов, например http://www.jsondiff.com/. Подобный механизм используется при выводе тестов или при автоматическом отслеживании изменений в конфигурационных файлах.
 
-##### Возможности утилиты:
+#### Возможности утилиты:
  - Поддержка разных входных форматов: yaml, json;
  - Генерация отчета в виде plain text, stylish и json.
- - По-умолчанию срабатывает встроенный форматер "Stylish"
+ - По-умолчанию срабатывает встроенный форматтер "Stylish"
 
----
+#### Поддерживаемые форматы вывода:
+"Вычислитель" может выводить рузельтат в двух видах:
+- форматтер "Stylish" выводит результат в вид дерева, где отличия помечаются "-" и "+";
+- форматтер "Plain" выводит результат в строковом виде с описанием изменений;
+
 ## Пример использования
-##### Вызов стправочной информации:
+#### Вызов стправочной информации:
  ```
 gendiff -h
 
@@ -35,10 +39,11 @@ difference.
 ```
 [![asciicast](https://asciinema.org/a/604451.svg)](https://asciinema.org/a/604451)
 
-##### Запуск вычислителя отличий:
- ```
+#### Запуск вычислителя отличий:
+По-умолчанию используется форматтер "Stylish". Для Выбора конретного форматтера используйте опцию выбора форматтера: `-f` или `--format`, с аргументами: `stylish` для "Stylish", `plain` для "Plain"
+```
 gendiff ./data/file1.json ./data/file2.json
-//or gendiff -f <formater> ./data/file1.json ./data/file2.json
+//or gendiff -f stylish ./data/file1.json ./data/file2.json
 
 {
   - follow: false
@@ -49,11 +54,21 @@ gendiff ./data/file1.json ./data/file2.json
   + verbose: true
 }
 ```
-[![asciicast](https://asciinema.org/a/605410.svg)](https://asciinema.org/a/605410)
+```
+gendiff --format plain ./data/file5.json ./data/file6.json
 
+Property 'follow' was removed
+Property 'newObject.key1' was added with value: 'value1'
+Property 'newObject.key2' was added with value: 'value2'
+Property 'newObject.key3' was removed
+Property 'proxy' was removed
+Property 'timeout' was updated. From 50 to 20
+Property 'verbose' was added with value: 'true'
+```
+[![asciicast](https://asciinema.org/a/605858.svg)](https://asciinema.org/a/605858)
 ---
 ## Порядок установки и системные требования
-##### Порядок установки:
+#### Порядок установки:
 ```
 git clone git@github.com:MiggRabbid/frontend-project-46.git
 cd frontend-project-46
@@ -62,6 +77,6 @@ npm install
 npm link
 ```
 
-##### Системные требования:
-Node.js v20.2.0
-Commander.JS v11.0.0
+#### Системные требования:
+- Node.js v20.2.0
+- Commander.JS v11.0.0
