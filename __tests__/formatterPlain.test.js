@@ -1,384 +1,20 @@
 /* eslint-disable no-undef */
+import YAML from 'js-yaml';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
 import plain from '../src/formatters/plain.js';
 
-const treeJson1 = {
-  common: {
-    value: {
-      follow: {
-        value: false,
-        symbol: '+',
-      },
-      setting1: {
-        value: 'Value 1',
-        symbol: null,
-      },
-      setting2: {
-        value: 200,
-        symbol: '-',
-      },
-      setting3: {
-        value1: true,
-        value2: null,
-        symbol: '-+',
-      },
-      setting4: {
-        value: 'blah blah',
-        symbol: '+',
-      },
-      setting5: {
-        value: {
-          key5: {
-            value: 'value5',
-            symbol: null,
-          },
-        },
-        symbol: '+',
-      },
-      setting6: {
-        value: {
-          doge: {
-            value: {
-              wow: {
-                value1: '',
-                value2: 'so much',
-                symbol: '-+',
-              },
-            },
-            symbol: null,
-          },
-          key: {
-            value: 'value',
-            symbol: null,
-          },
-          ops: {
-            value: 'vops',
-            symbol: '+',
-          },
-        },
-        symbol: null,
-      },
-    },
-    symbol: null,
-  },
-  group1: {
-    value: {
-      baz: {
-        value1: 'bas',
-        value2: 'bars',
-        symbol: '-+',
-      },
-      foo: {
-        value: 'bar',
-        symbol: null,
-      },
-      nest: {
-        value1: {
-          key: {
-            value: 'value',
-            symbol: null,
-          },
-        },
-        value2: 'str',
-        symbol: '-+',
-      },
-    },
-    symbol: null,
-  },
-  group2: {
-    value: {
-      abc: {
-        value: 12345,
-        symbol: null,
-      },
-      deep: {
-        value: {
-          id: {
-            value: 45,
-            symbol: null,
-          },
-        },
-        symbol: null,
-      },
-    },
-    symbol: '-',
-  },
-  group3: {
-    value: {
-      deep: {
-        value: {
-          id: {
-            value: {
-              number: {
-                value: 45,
-                symbol: null,
-              },
-            },
-            symbol: null,
-          },
-        },
-        symbol: null,
-      },
-      fee: {
-        value: 100500,
-        symbol: null,
-      },
-    },
-    symbol: '+',
-  },
-};
-const treeJson2 = {
-  common: {
-    value: {
-      follow: {
-        value: false,
-        symbol: '+',
-      },
-      setting1: {
-        value: 'Value 1',
-        symbol: null,
-      },
-      setting2: {
-        value: 200,
-        symbol: '-',
-      },
-      setting3: {
-        value1: true,
-        value2: null,
-        symbol: '-+',
-      },
-      setting4: {
-        value: 'blah blah',
-        symbol: '+',
-      },
-      setting5: {
-        value: {
-          key5: {
-            value: 'value5',
-            symbol: null,
-          },
-        },
-        symbol: '+',
-      },
-      setting6: {
-        value: {
-          doge: {
-            value: {
-              wow: {
-                value1: '',
-                value2: 'so much',
-                symbol: '-+',
-              },
-            },
-            symbol: null,
-          },
-          key: {
-            value: 'value',
-            symbol: null,
-          },
-          ops: {
-            value: 'vops',
-            symbol: '+',
-          },
-        },
-        symbol: null,
-      },
-    },
-    symbol: null,
-  },
-  group1: {
-    value: {
-      baz: {
-        value1: 'bas',
-        value2: 'bars',
-        symbol: '-+',
-      },
-      foo: {
-        value: 'bar',
-        symbol: null,
-      },
-      nest: {
-        value1: 'str',
-        value2: {
-          key: {
-            value: 'value',
-            symbol: null,
-          },
-        },
-        symbol: '-+',
-      },
-    },
-    symbol: null,
-  },
-  group2: {
-    value: {
-      abc: {
-        value: 12345,
-        symbol: null,
-      },
-      deep: {
-        value: {
-          id: {
-            value: 45,
-            symbol: null,
-          },
-        },
-        symbol: null,
-      },
-    },
-    symbol: '-',
-  },
-  group3: {
-    value: {
-      deep: {
-        value: {
-          id: {
-            value: {
-              number: {
-                value: 45,
-                symbol: null,
-              },
-            },
-            symbol: null,
-          },
-        },
-        symbol: null,
-      },
-      fee: {
-        value: 100500,
-        symbol: null,
-      },
-    },
-    symbol: '+',
-  },
-};
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
-const treeJson3 = {
-  common: {
-    value: {
-      follow: {
-        value: false,
-        symbol: '+',
-      },
-      setting1: {
-        value: 'Value 1',
-        symbol: null,
-      },
-      setting2: {
-        value: 200,
-        symbol: '-',
-      },
-      setting3: {
-        value1: true,
-        value2: null,
-        symbol: '-+',
-      },
-      setting4: {
-        value: 'blah blah',
-        symbol: '+',
-      },
-      setting5: {
-        value: {
-          key5: {
-            value: 'value5',
-            symbol: null,
-          },
-        },
-        symbol: '+',
-      },
-      setting6: {
-        value: {
-          doge: {
-            value: {
-              wow: {
-                value1: '',
-                value2: 'so much',
-                symbol: '-+',
-              },
-            },
-            symbol: null,
-          },
-          key: {
-            value: 'value',
-            symbol: null,
-          },
-          ops: {
-            value: 'vops',
-            symbol: '+',
-          },
-        },
-        symbol: null,
-      },
-    },
-    symbol: null,
-  },
-  group1: {
-    value: {
-      baz: {
-        value1: 'bas',
-        value2: 'bars',
-        symbol: '-+',
-      },
-      foo: {
-        value: 'bar',
-        symbol: null,
-      },
-      nest: {
-        value1: {
-          key: {
-            value: 'value',
-            symbol: null,
-          },
-        },
-        value2: 'str',
-        symbol: '-+',
-      },
-    },
-    symbol: null,
-  },
-  group2: {
-    value: {
-      abc: {
-        value: 12345,
-        symbol: null,
-      },
-      deep: {
-        value: {
-          id: {
-            value: 45,
-            symbol: null,
-          },
-        },
-        symbol: null,
-      },
-    },
-    symbol: '-',
-  },
-  group3: {
-    value: {
-      deep: {
-        value: {
-          id: {
-            value: {
-              number: {
-                value: 45,
-                symbol: null,
-              },
-            },
-            symbol: null,
-          },
-        },
-        symbol: null,
-      },
-      fee: {
-        value: 100500,
-        symbol: null,
-      },
-    },
-    symbol: '/',
-  },
-};
+const filepathTree1 = getFixturePath('tree1.yml');
+const filepathTree2 = getFixturePath('tree2.yml');
+const filepathTree3 = getFixturePath('tree3.yml');
 
 test('test formatter Plain', () => {
+  const tree1 = YAML.load(readFileSync(filepathTree1, 'utf-8'));
   const expected1 = `Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to null
@@ -391,8 +27,9 @@ Property 'group1.nest' was updated. From [complex value] to 'str'
 Property 'group2' was removed
 Property 'group3' was added with value: [complex value]`;
 
-  expect(plain(treeJson1)).toBe(expected1);
+  expect(plain(tree1)).toBe(expected1);
 
+  const tree2 = YAML.load(readFileSync(filepathTree2, 'utf-8'));
   const expected2 = `Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to null
@@ -405,12 +42,13 @@ Property 'group1.nest' was updated. From 'str' to [complex value]
 Property 'group2' was removed
 Property 'group3' was added with value: [complex value]`;
 
-  expect(plain(treeJson2)).toBe(expected2);
+  expect(plain(tree2)).toBe(expected2);
 });
 
 test('test formatter plain throw new Error', () => {
+  const tree3 = YAML.load(readFileSync(filepathTree3, 'utf-8'));
   function diffString() {
-    plain(treeJson3);
+    plain(tree3);
   }
   expect(diffString).toThrow('Unknown symbol: /!');
 });

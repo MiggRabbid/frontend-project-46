@@ -12,7 +12,6 @@ const filepathYaml2 = getFixturePath('file2.test.yaml');
 const filepathJson1 = getFixturePath('file3.test.json');
 
 test('test readFile() for YAML', () => {
-  console.log(filepathYaml1);
   const expected1 = {
     key5: 'volue5',
     key4: 'volue4',
