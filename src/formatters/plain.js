@@ -36,7 +36,9 @@ const plain = (diffTree) => {
   const iter = (tree, path = '', currentString = '') => {
     const keys = Object.keys(tree);
     const result = keys.reduce((acc, key) => {
+      let temp;
       let currentPath;
+      const currentValue = tree[key].value;
       const { symbol } = tree[key];
 
       if (path === '') {
@@ -45,41 +47,37 @@ const plain = (diffTree) => {
         currentPath = `${path}.${key}`;
       }
 
-      const currentValue = tree[key].value;
-      if (symbol === '-') {
-        return getConcat(acc, currentPath, symbol, currentValue);
-      }
-
       if (symbol === '+') {
         if (_.isObject(currentValue)) {
-          return getConcat(acc, currentPath, symbol, '[complex value]');
+          temp = getConcat(acc, currentPath, symbol, '[complex value]');
         } else {
-          return getConcat(acc, currentPath, symbol, currentValue);
+          temp = getConcat(acc, currentPath, symbol, currentValue);
         }
+        return temp;
       }
-
       if (symbol === null) {
         if (_.isObject(currentValue)) {
           const tempAcc = iter(tree[key].value, currentPath, acc);
-          return getConcat(tempAcc, currentPath, symbol, currentValue);
+          temp = getConcat(tempAcc, currentPath, symbol, currentValue);
         } else {
-          return getConcat(acc, currentPath, symbol, currentValue);
+          temp = getConcat(acc, currentPath, symbol, currentValue);
         }
+        return temp;
       }
-
       if (symbol === '-+') {
         if (_.isObject(tree[key].value1)) {
           const arrValue = ['[complex value]', tree[key].value2];
-          return getConcat(acc, currentPath, symbol, arrValue);
-        }
-        if (_.isObject(tree[key].value2)) {
+          temp = getConcat(acc, currentPath, symbol, arrValue);
+        } else if (_.isObject(tree[key].value2)) {
           const arrValue = [tree[key].value1, '[complex value]'];
-          return getConcat(acc, currentPath, symbol, arrValue);
+          temp = getConcat(acc, currentPath, symbol, arrValue);
         } else {
           const arrValue = [tree[key].value1, tree[key].value2];
-          return getConcat(acc, currentPath, symbol, arrValue);
+          temp = getConcat(acc, currentPath, symbol, arrValue);
         }
+        return temp;
       }
+      return getConcat(acc, currentPath, symbol, currentValue);
     }, currentString);
 
     return result;
