@@ -52,7 +52,6 @@ const stylish = (diffTree) => {
     }, '');
     return `{\n${string}${tab.repeat(depth - 1)}}`;
   };
-
   const diffString = iter(diffTree, 1);
   return diffString;
 };
