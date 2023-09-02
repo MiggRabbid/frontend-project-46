@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const getConcat = (acc, tab, depth, symbol, key, value) => {
+const getString = (acc, tab, depth, symbol, key, value) => {
   let valueFirst;
   let valueSecond;
   let minus;
@@ -29,26 +29,25 @@ const stylish = (diffTree) => {
       const { symbol } = tree[key];
       if (_.isObject(tree[key].value)) {
         const currentValue = iter(tree[key].value, depth + 2);
-        return getConcat(acc, tab, depth, symbol, key, currentValue);
+        return getString(acc, tab, depth, symbol, key, currentValue);
       }
-      if (_.has(tree[key], 'value1') && _.isObject(tree[key].value1)) {
+      if (_.isObject(tree[key].value1)) {
         const valueFirst = iter(tree[key].value1, depth + 2);
         const valueSecond = tree[key].value2;
-        return getConcat(acc, tab, depth, symbol, key, [valueFirst, valueSecond]);
+        return getString(acc, tab, depth, symbol, key, [valueFirst, valueSecond]);
       }
-      if (_.has(tree[key], 'value2') && _.isObject(tree[key].value2)) {
+      if (_.isObject(tree[key].value2)) {
         const valueFirst = tree[key].value1;
         const valueSecond = iter(tree[key].value2, depth + 2);
-        return getConcat(acc, tab, depth, symbol, key, [valueFirst, valueSecond]);
+        return getString(acc, tab, depth, symbol, key, [valueFirst, valueSecond]);
       }
       if (symbol === '-+') {
         const valueFirst = tree[key].value1;
         const valueSecond = tree[key].value2;
-        return getConcat(acc, tab, depth, symbol, key, [valueFirst, valueSecond]);
-      } else {
-        const currentValue = tree[key].value;
-        return getConcat(acc, tab, depth, symbol, key, currentValue);
+        return getString(acc, tab, depth, symbol, key, [valueFirst, valueSecond]);
       }
+      const currentValue = tree[key].value;
+      return getString(acc, tab, depth, symbol, key, currentValue);
     }, '');
     return `{\n${string}${tab.repeat(depth - 1)}}`;
   };

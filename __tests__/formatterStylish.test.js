@@ -111,9 +111,7 @@ test('test formatter Stylish', () => {
 
 test('test formatter Stylish throw new Error', () => {
   const tree3 = YAML.load(readFileSync(filepathTree3, 'utf-8'));
-  console.log(tree3);
   function diffString() {
-    console.log(stylish(tree3));
     stylish(tree3);
   }
   expect(diffString).toThrow('Unknown symbol: /!');
