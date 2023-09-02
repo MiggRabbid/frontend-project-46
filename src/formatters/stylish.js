@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const getString = (acc, tab, depth, symbol, key, value) => {
+const getString = (acc, tab, tabCounter, symbol, key, value) => {
   let valueFirst;
   let valueSecond;
   let minus;
@@ -8,48 +8,48 @@ const getString = (acc, tab, depth, symbol, key, value) => {
 
   switch (symbol) {
     case null:
-      return `${acc}${tab.repeat(depth + 1)}${key}: ${value}\n`;
+      return `${acc}${tab.repeat(tabCounter + 1)}${key}: ${value}\n`;
     case '-':
     case '+':
-      return `${acc}${tab.repeat(depth)}${symbol} ${key}: ${value}\n`;
+      return `${acc}${tab.repeat(tabCounter)}${symbol} ${key}: ${value}\n`;
     case '-+':
       [valueFirst, valueSecond] = value;
       [minus, plus] = symbol.split('');
-      return `${acc}${tab.repeat(depth)}${minus} ${key}: ${valueFirst}\n${tab.repeat(depth)}${plus} ${key}: ${valueSecond}\n`;
+      return `${acc}${tab.repeat(tabCounter)}${minus} ${key}: ${valueFirst}\n${tab.repeat(tabCounter)}${plus} ${key}: ${valueSecond}\n`;
     default:
       throw new Error(`Unknown symbol: ${symbol}!`);
   }
 };
 
 const stylish = (diffTree) => {
-  const iter = (tree, depth) => {
+  const iter = (tree, tabCounter) => {
     const tab = '  ';
     const keys = Object.keys(tree);
     const string = keys.reduce((acc, key) => {
       const { symbol } = tree[key];
       if (_.isObject(tree[key].value)) {
-        const currentValue = iter(tree[key].value, depth + 2);
-        return getString(acc, tab, depth, symbol, key, currentValue);
+        const currentValue = iter(tree[key].value, tabCounter + 2);
+        return getString(acc, tab, tabCounter, symbol, key, currentValue);
       }
       if (_.isObject(tree[key].value1)) {
-        const valueFirst = iter(tree[key].value1, depth + 2);
+        const valueFirst = iter(tree[key].value1, tabCounter + 2);
         const valueSecond = tree[key].value2;
-        return getString(acc, tab, depth, symbol, key, [valueFirst, valueSecond]);
+        return getString(acc, tab, tabCounter, symbol, key, [valueFirst, valueSecond]);
       }
       if (_.isObject(tree[key].value2)) {
         const valueFirst = tree[key].value1;
-        const valueSecond = iter(tree[key].value2, depth + 2);
-        return getString(acc, tab, depth, symbol, key, [valueFirst, valueSecond]);
+        const valueSecond = iter(tree[key].value2, tabCounter + 2);
+        return getString(acc, tab, tabCounter, symbol, key, [valueFirst, valueSecond]);
       }
       if (symbol === '-+') {
         const valueFirst = tree[key].value1;
         const valueSecond = tree[key].value2;
-        return getString(acc, tab, depth, symbol, key, [valueFirst, valueSecond]);
+        return getString(acc, tab, tabCounter, symbol, key, [valueFirst, valueSecond]);
       }
       const currentValue = tree[key].value;
-      return getString(acc, tab, depth, symbol, key, currentValue);
+      return getString(acc, tab, tabCounter, symbol, key, currentValue);
     }, '');
-    return `{\n${string}${tab.repeat(depth - 1)}}`;
+    return `{\n${string}${tab.repeat(tabCounter - 1)}}`;
   };
   const diffString = iter(diffTree, 1);
   return diffString;
