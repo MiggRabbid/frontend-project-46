@@ -42,30 +42,25 @@ const plain = (diffTree) => {
       let currentPath;
       const currentValue = tree[key].value;
       const { symbol } = tree[key];
-
       if (path === '') {
         currentPath = `${key}`;
       } else {
         currentPath = `${path}.${key}`;
       }
-
       if (symbol === null) {
         if (_.isObject(currentValue)) {
           const tempAcc = iter(tree[key].value, currentPath, acc);
           return getString(tempAcc, currentPath, symbol, currentValue);
         }
         return getString(acc, currentPath, symbol, currentValue);
-      }
-      if (symbol === '-+') {
+      } else if (symbol === '-+') {
         const arrValue = [tree[key].value1, tree[key].value2];
         return getString(acc, currentPath, symbol, arrValue);
       }
       return getString(acc, currentPath, symbol, currentValue);
     }, currentString);
-
     return result;
   };
-
   const diffString = iter(diffTree).replace('\n', '');
   return diffString;
 };

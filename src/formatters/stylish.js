@@ -5,7 +5,6 @@ const getString = (acc, tab, tabCounter, symbol, key, value) => {
   let valueSecond;
   let minus;
   let plus;
-
   switch (symbol) {
     case null:
       return `${acc}${tab.repeat(tabCounter + 1)}${key}: ${value}\n`;
@@ -30,18 +29,15 @@ const stylish = (diffTree) => {
       if (_.isObject(tree[key].value)) {
         const currentValue = iter(tree[key].value, tabCounter + 2);
         return getString(acc, tab, tabCounter, symbol, key, currentValue);
-      }
-      if (_.isObject(tree[key].value1)) {
+      } else if (_.isObject(tree[key].value1)) {
         const valueFirst = iter(tree[key].value1, tabCounter + 2);
         const valueSecond = tree[key].value2;
         return getString(acc, tab, tabCounter, symbol, key, [valueFirst, valueSecond]);
-      }
-      if (_.isObject(tree[key].value2)) {
+      } else if (_.isObject(tree[key].value2)) {
         const valueFirst = tree[key].value1;
         const valueSecond = iter(tree[key].value2, tabCounter + 2);
         return getString(acc, tab, tabCounter, symbol, key, [valueFirst, valueSecond]);
-      }
-      if (symbol === '-+') {
+      } else if (symbol === '-+') {
         const valueFirst = tree[key].value1;
         const valueSecond = tree[key].value2;
         return getString(acc, tab, tabCounter, symbol, key, [valueFirst, valueSecond]);
