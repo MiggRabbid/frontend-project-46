@@ -5,13 +5,18 @@ import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import plain from '../src/formatters/plain.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+let filepathTree1;
+let filepathTree2;
+let filepathTree3;
 
-const filepathTree1 = getFixturePath('tree1.yml');
-const filepathTree2 = getFixturePath('tree2.yml');
-const filepathTree3 = getFixturePath('tree3.yml');
+beforeAll(() => {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+  const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+  filepathTree1 = getFixturePath('tree1.yml');
+  filepathTree2 = getFixturePath('tree2.yml');
+  filepathTree3 = getFixturePath('tree3.yml');
+});
 
 test('test formatter Plain', () => {
   const tree1 = YAML.load(readFileSync(filepathTree1, 'utf-8'));

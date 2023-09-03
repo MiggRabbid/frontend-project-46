@@ -3,9 +3,7 @@ import _ from 'lodash';
 const genDiffTree = (file1, file2 = {}) => {
   let keysFromFiles = Object.keys(file1).concat(Object.keys(file2)).sort();
   keysFromFiles = keysFromFiles.filter((key, index) => keysFromFiles.indexOf(key) === index);
-
   const diffTree = {};
-
   keysFromFiles.forEach((key) => {
     if (_.has(file1, key) && !_.has(file2, key)) {
       if (Object.keys(file2).length === 0) {

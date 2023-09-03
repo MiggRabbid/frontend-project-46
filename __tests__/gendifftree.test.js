@@ -1,269 +1,29 @@
 /* eslint-disable no-undef */
+import YAML from 'js-yaml';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import { getFormattedDiff } from '../src/index.js';
 import genDiffTree from '../src/gendifftree.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+let filepathJson1;
+let filepathJson2;
+let filepathJson3;
+let filepathJson4;
+let filepathTree1;
+let filepathTree2;
 
-const filepathJson1 = getFixturePath('file3.test.json');
-const filepathJson2 = getFixturePath('file4.test.json');
-const filepathJson3 = getFixturePath('file5.test.json');
-const filepathJson4 = getFixturePath('file6.test.json');
-
-const treeJson1 = {
-  common: {
-    value: {
-      follow: {
-        value: false,
-        symbol: '+',
-      },
-      setting1: {
-        value: 'Value 1',
-        symbol: null,
-      },
-      setting2: {
-        value: 200,
-        symbol: '-',
-      },
-      setting3: {
-        value1: true,
-        value2: null,
-        symbol: '-+',
-      },
-      setting4: {
-        value: 'blah blah',
-        symbol: '+',
-      },
-      setting5: {
-        value: {
-          key5: {
-            value: 'value5',
-            symbol: null,
-          },
-        },
-        symbol: '+',
-      },
-      setting6: {
-        value: {
-          doge: {
-            value: {
-              wow: {
-                value1: '',
-                value2: 'so much',
-                symbol: '-+',
-              },
-            },
-            symbol: null,
-          },
-          key: {
-            value: 'value',
-            symbol: null,
-          },
-          ops: {
-            value: 'vops',
-            symbol: '+',
-          },
-        },
-        symbol: null,
-      },
-    },
-    symbol: null,
-  },
-  group1: {
-    value: {
-      baz: {
-        value1: 'bas',
-        value2: 'bars',
-        symbol: '-+',
-      },
-      foo: {
-        value: 'bar',
-        symbol: null,
-      },
-      nest: {
-        value1: {
-          key: {
-            value: 'value',
-            symbol: null,
-          },
-        },
-        value2: 'str',
-        symbol: '-+',
-      },
-    },
-    symbol: null,
-  },
-  group2: {
-    value: {
-      abc: {
-        value: 12345,
-        symbol: null,
-      },
-      deep: {
-        value: {
-          id: {
-            value: 45,
-            symbol: null,
-          },
-        },
-        symbol: null,
-      },
-    },
-    symbol: '-',
-  },
-  group3: {
-    value: {
-      deep: {
-        value: {
-          id: {
-            value: {
-              number: {
-                value: 45,
-                symbol: null,
-              },
-            },
-            symbol: null,
-          },
-        },
-        symbol: null,
-      },
-      fee: {
-        value: 100500,
-        symbol: null,
-      },
-    },
-    symbol: '+',
-  },
-};
-const treeJson2 = {
-  common: {
-    value: {
-      follow: {
-        value: false,
-        symbol: '+',
-      },
-      setting1: {
-        value: 'Value 1',
-        symbol: null,
-      },
-      setting2: {
-        value: 200,
-        symbol: '-',
-      },
-      setting3: {
-        value1: true,
-        value2: null,
-        symbol: '-+',
-      },
-      setting4: {
-        value: 'blah blah',
-        symbol: '+',
-      },
-      setting5: {
-        value: {
-          key5: {
-            value: 'value5',
-            symbol: null,
-          },
-        },
-        symbol: '+',
-      },
-      setting6: {
-        value: {
-          doge: {
-            value: {
-              wow: {
-                value1: '',
-                value2: 'so much',
-                symbol: '-+',
-              },
-            },
-            symbol: null,
-          },
-          key: {
-            value: 'value',
-            symbol: null,
-          },
-          ops: {
-            value: 'vops',
-            symbol: '+',
-          },
-        },
-        symbol: null,
-      },
-    },
-    symbol: null,
-  },
-  group1: {
-    value: {
-      baz: {
-        value1: 'bas',
-        value2: 'bars',
-        symbol: '-+',
-      },
-      foo: {
-        value: 'bar',
-        symbol: null,
-      },
-      nest: {
-        value1: 'str',
-        value2: {
-          key: {
-            value: 'value',
-            symbol: null,
-          },
-        },
-        symbol: '-+',
-      },
-    },
-    symbol: null,
-  },
-  group2: {
-    value: {
-      abc: {
-        value: 12345,
-        symbol: null,
-      },
-      deep: {
-        value: {
-          id: {
-            value: 45,
-            symbol: null,
-          },
-        },
-        symbol: null,
-      },
-    },
-    symbol: '-',
-  },
-  group3: {
-    value: {
-      deep: {
-        value: {
-          id: {
-            value: {
-              number: {
-                value: 45,
-                symbol: null,
-              },
-            },
-            symbol: null,
-          },
-        },
-        symbol: null,
-      },
-      fee: {
-        value: 100500,
-        symbol: null,
-      },
-    },
-    symbol: '+',
-  },
-};
+beforeAll(() => {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+  const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+  filepathJson1 = getFixturePath('file3.test.json');
+  filepathJson2 = getFixturePath('file4.test.json');
+  filepathJson3 = getFixturePath('file5.test.json');
+  filepathJson4 = getFixturePath('file6.test.json');
+  filepathTree1 = getFixturePath('tree1.yml');
+  filepathTree2 = getFixturePath('tree2.yml');
+});
 
 test('test genDiffTree() for YAML', () => {
   const fileYaml1 = {
@@ -295,16 +55,17 @@ test('test genDiffTree() for YAML', () => {
 test('test genDiffTree() for JSON', () => {
   const fileJson1 = JSON.parse(readFileSync(filepathJson1, 'utf-8'));
   const fileJson2 = JSON.parse(readFileSync(filepathJson2, 'utf-8'));
-  const expected1 = treeJson1;
+  const expected1 = YAML.load(readFileSync(filepathTree1, 'utf-8'));
   expect(genDiffTree(fileJson1, fileJson2)).toEqual(expected1);
 
   const fileJson3 = JSON.parse(readFileSync(filepathJson3, 'utf-8'));
   const fileJson4 = JSON.parse(readFileSync(filepathJson4, 'utf-8'));
-  const expected2 = treeJson2;
+  const expected2 = YAML.load(readFileSync(filepathTree2, 'utf-8'));
   expect(genDiffTree(fileJson3, fileJson4)).toEqual(expected2);
 });
 
 test('test getFormattedDiff() throw new Error', () => {
+  const treeJson1 = YAML.load(readFileSync(filepathTree1, 'utf-8'));
   function getDiff() {
     getFormattedDiff(treeJson1, 'undefined');
   }

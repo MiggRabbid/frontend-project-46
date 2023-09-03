@@ -3,12 +3,16 @@ import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import genDiff from '../src/index.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+let filepathJson1;
+let filepathJson2;
 
-const filepathJson1 = getFixturePath('file3.test.json');
-const filepathJson2 = getFixturePath('file4.test.json');
+beforeAll(() => {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+  const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+  filepathJson1 = getFixturePath('file3.test.json');
+  filepathJson2 = getFixturePath('file4.test.json');
+});
 
 test('test genDiff() formatter = stylish', () => {
   const expected = `{
