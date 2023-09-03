@@ -39,23 +39,15 @@ const plain = (diffTree) => {
   const iter = (tree, path = '', currentString = '') => {
     const keys = Object.keys(tree);
     const result = keys.reduce((acc, key) => {
-      let currentPath;
+      const currentPath = path === '' ? `${key}` : `${path}.${key}`;
       const currentValue = tree[key].value;
       const { symbol } = tree[key];
-      if (path === '') {
-        currentPath = `${key}`;
-      } else {
-        currentPath = `${path}.${key}`;
-      }
-      if (symbol === null) {
-        if (_.isObject(currentValue)) {
-          const tempAcc = iter(tree[key].value, currentPath, acc);
-          return getString(tempAcc, currentPath, symbol, currentValue);
-        }
-        return getString(acc, currentPath, symbol, currentValue);
-      } else if (symbol === '-+') {
+      if (symbol === '-+') {
         const arrValue = [tree[key].value1, tree[key].value2];
         return getString(acc, currentPath, symbol, arrValue);
+      } else if (_.isObject(currentValue)) {
+        const tempAcc = iter(tree[key].value, currentPath, acc);
+        return getString(tempAcc, currentPath, symbol, currentValue);
       }
       return getString(acc, currentPath, symbol, currentValue);
     }, currentString);
