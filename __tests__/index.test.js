@@ -1,14 +1,8 @@
 /* eslint-disable no-undef */
-import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
 import genDiff from '../src/index.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-
-const filepathJson1 = getFixturePath('file3.test.json');
-const filepathJson2 = getFixturePath('file4.test.json');
+const filepathJson1 = '__fixtures__/file3.test.json';
+const filepathJson2 = '__fixtures__/file4.test.json';
 
 test('test genDiff() formatter = stylish', () => {
   const expected = `{
@@ -73,4 +67,10 @@ Property 'group2' was removed
 Property 'group3' was added with value: [complex value]`;
 
   expect(genDiff(filepathJson1, filepathJson2, 'plain')).toBe(expected);
+});
+
+test('test genDiff() formatter = json', () => {
+  const expected = '[{"file1":[{"name":"file3.test.json"},{"extName":".json"},{"path":"__fixtures__/file3.test.json"}],"file2":[{"name":"file4.test.json"},{"extName":".json"},{"path":"__fixtures__/file4.test.json"}],"changedLines":[{"remote":2},{"added":5},{"changed":4},{"unchanged":3}],"diffTree":[{"common":{"value":{"follow":{"value":false,"status":"added"},"setting1":{"value":"Value 1","status":"unchanged"},"setting2":{"value":200,"status":"remote"},"setting3":{"value1":true,"value2":null,"status":"changed"},"setting4":{"value":"blah blah","status":"added"},"setting5":{"value":{"key5":{"value":"value5","status":"unchanged"}},"status":"added"},"setting6":{"value":{"doge":{"value":{"wow":{"value1":"","value2":"so much","status":"changed"}},"status":"unchanged"},"key":{"value":"value","status":"unchanged"},"ops":{"value":"vops","status":"added"}},"status":"unchanged"}},"status":"unchanged"},"group1":{"value":{"baz":{"value1":"bas","value2":"bars","status":"changed"},"foo":{"value":"bar","status":"unchanged"},"nest":{"value1":{"key":{"value":"value","status":"unchanged"}},"value2":"str","status":"changed"}},"status":"unchanged"},"group2":{"value":{"abc":{"value":12345,"status":"unchanged"},"deep":{"value":{"id":{"value":45,"status":"unchanged"}},"status":"unchanged"}},"status":"remote"},"group3":{"value":{"deep":{"value":{"id":{"value":{"number":{"value":45,"status":"unchanged"}},"status":"unchanged"}},"status":"unchanged"},"fee":{"value":100500,"status":"unchanged"}},"status":"added"}}]}]';
+
+  expect(genDiff(filepathJson1, filepathJson2, 'json')).toBe(expected);
 });

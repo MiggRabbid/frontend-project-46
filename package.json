@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "Вычислитель отличий - cравнивает два файла конфигурации и показывает разницу.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "jest"
   },
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "commander": "^11.0.0",
-    "gendiff": "^1.0.0",
+    "gendiff": "1.0.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21"
   }

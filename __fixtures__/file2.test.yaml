@@ -1,10 +1,10 @@
 {
-    key3: "volue3.2",
+    key3: "value3.2",
     key2: {
-        key22: "volue2" 
+        key22: "value2" 
     },
-    key1: "volue1",
-    key0: "volue0",
+    key1: "value1",
+    key0: "value0",
     isYaml: true,
     withChildren: {
         children1: {
