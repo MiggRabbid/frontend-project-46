@@ -4,12 +4,14 @@ import YAML from 'js-yaml';
 
 const readFile = (filepath) => {
   const extName = path.extname(filepath);
+  const fullPath = path.resolve(process.cwd(), filepath);
+
   switch (extName) {
     case '.json':
-      return JSON.parse(readFileSync(filepath, 'utf-8'));
+      return JSON.parse(readFileSync(fullPath, 'utf-8'));
     case '.yaml':
     case '.yml':
-      return YAML.load(readFileSync(filepath, 'utf-8'));
+      return YAML.load(readFileSync(fullPath, 'utf-8'));
     default:
       throw new Error(`Unknown extName: ${extName}!`);
   }
