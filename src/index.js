@@ -1,21 +1,7 @@
 import readFile from './parsers.js';
 import genDiffTree from './gendifftree.js';
-import stylish from './formatters/stylish.js';
-import plain from './formatters/plain.js';
-import json from './formatters/json.js';
+import getFormattedDiff from './formatters/index.js';
 
-const getFormattedDiff = (diffTree, formatter, filepath1, filepath2) => {
-  switch (formatter) {
-    case 'stylish':
-      return stylish(diffTree);
-    case 'plain':
-      return plain(diffTree);
-    case 'json':
-      return json(diffTree, filepath1, filepath2);
-    default:
-      throw new Error(`Unknown formatter: ${formatter}!`);
-  }
-};
 
 const genDiff = (filepath1, filepath2, formatter) => {
   const file1 = readFile(filepath1);
@@ -26,4 +12,3 @@ const genDiff = (filepath1, filepath2, formatter) => {
 };
 
 export default genDiff;
-export { getFormattedDiff };

@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "Вычислитель отличий - cравнивает два файла конфигурации и показывает разницу.",
-  "main": "bin/gendiff.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest"
   },

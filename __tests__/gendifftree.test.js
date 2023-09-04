@@ -3,7 +3,7 @@ import YAML from 'js-yaml';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
-import { getFormattedDiff } from '../src/index.js';
+import getFormattedDiff from '../src/formatters/index.js';
 import genDiffTree from '../src/gendifftree.js';
 
 let filepathJson1;
