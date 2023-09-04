@@ -9,35 +9,35 @@ const genDiffTree = (file1, file2 = {}) => {
       if (Object.keys(file2).length === 0) {
         diffTree[key] = {
           value: _.isObject(file1[key]) ? genDiffTree(file1[key]) : file1[key],
-          symbol: null,
+          status: 'unchanged',
         };
       } else {
         diffTree[key] = {
           value: _.isObject(file1[key]) ? genDiffTree(file1[key]) : file1[key],
-          symbol: '-',
+          status: 'remote',
         };
       }
     } else if (!_.has(file1, key) && _.has(file2, key)) {
       diffTree[key] = {
         value: _.isObject(file2[key]) ? genDiffTree(file2[key]) : file2[key],
-        symbol: '+',
+        status: 'added',
       };
     } else if (_.has(file1, key) && _.has(file2, key)) {
       if (_.isObject(file1[key]) && _.isObject(file2[key])) {
         diffTree[key] = {
           value: genDiffTree(file1[key], file2[key]),
-          symbol: null,
+          status: 'unchanged',
         };
       } else if (file1[key] === file2[key]) {
         diffTree[key] = {
           value: file1[key],
-          symbol: null,
+          status: 'unchanged',
         };
       } else {
         diffTree[key] = {
           value1: _.isObject(file1[key]) ? genDiffTree(file1[key]) : file1[key],
           value2: _.isObject(file2[key]) ? genDiffTree(file2[key]) : file2[key],
-          symbol: '-+',
+          status: 'changed',
         };
       }
     }

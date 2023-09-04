@@ -119,5 +119,5 @@ test('test formatter Stylish throw new Error', () => {
   function diffString() {
     stylish(tree3);
   }
-  expect(diffString).toThrow('Unknown symbol: /!');
+  expect(diffString).toThrow('Unknown status: unadded!');
 });

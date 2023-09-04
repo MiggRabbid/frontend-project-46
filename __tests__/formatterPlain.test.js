@@ -55,5 +55,5 @@ test('test formatter plain throw new Error', () => {
   function diffString() {
     plain(tree3);
   }
-  expect(diffString).toThrow('Unknown symbol: /!');
+  expect(diffString).toThrow('Unknown status: unadded!');
 });

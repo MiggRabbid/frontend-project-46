@@ -1,0 +1,29 @@
+[{
+    "filePath": "/root/IT/frontend-project-46/__fixtures__/tree1.yml",
+    "messages":[{
+    "ruleId":null,
+    "fatal":true,
+    "severity":2,
+    "message":"Parsing error: Label 'value' is already declared",
+    "line":5,
+    "column":9,
+    "nodeType":null
+    }],
+    "suppressedMessages":[],
+    "errorCount":1,
+    "fatalErrorCount":1,
+    "warningCount":0,
+    "fixableErrorCount":0,
+    "fixableWarningCount":0,
+    "source":"{\n  common: {\n    value: {\n      follow: {\n        value: false,\n        symbol: '+',\n      },\n      setting1: {\n        value: 'Value 1',\n        symbol: null,\n      },\n      setting2: {\n        value: 200,\n        symbol: '-',\n      },\n      setting3: {\n        value1: true,\n        value2: null,\n        symbol: '-+',\n      },\n      setting4: {\n        value: 'blah blah',\n        symbol: '+',\n      },\n      setting5: {\n        value: {\n          key5: {\n            value: 'value5',\n            symbol: null,\n          },\n        },\n        symbol: '+',\n      },\n      setting6: {\n        value: {\n          doge: {\n            value: {\n              wow: {\n                value1: '',\n                value2: 'so much',\n                symbol: '-+',\n              },\n            },\n            symbol: null,\n          },\n          key: {\n            value: 'value',\n            symbol: null,\n          },\n          ops: {\n            value: 'vops',\n            symbol: '+',\n          },\n        },\n        symbol: null,\n      },\n    },\n    symbol: null,\n  },\n  group1: {\n    value: {\n      baz: {\n        value1: 'bas',\n        value2: 'bars',\n        symbol: '-+',\n      },\n      foo: {\n        value: 'bar',\n        symbol: null,\n      },\n      nest: {\n        value1: {\n          key: {\n            value: 'value',\n            symbol: null,\n          },\n        },\n        value2: 'str',\n        symbol: '-+',\n      },\n    },\n    symbol: null,\n  },\n  group2: {\n    value: {\n      abc: {\n        value: 12345,\n        symbol: null,\n      },\n      deep: {\n        value: {\n          id: {\n            value: 45,\n            symbol: null,\n          },\n        },\n        symbol: null,\n      },\n    },\n    symbol: '-',\n  },\n  group3: {\n    value: {\n      deep: {\n        value: {\n          id: {\n            value: {\n              number: {\n                value: 45,\n                symbol: null,\n              },\n            },\n            symbol: null,\n          },\n        },\n        symbol: null,\n      },\n      fee: {\n        value: 100500,\n        symbol: null,\n      },\n    },\n    symbol: '+',\n  },\n}\n",
+    "usedDeprecatedRules":[{
+    "ruleId":"lines-around-directive",
+    "replacedBy":["padding-line-between-statements"]},
+    {"ruleId":"no-spaced-func","replacedBy":["func-call-spacing"]},
+    {"ruleId":"global-require","replacedBy":[]},
+    {"ruleId":"no-buffer-constructor","replacedBy":[]},
+    {"ruleId":"no-new-require","replacedBy":[]},
+    {"ruleId":"no-path-concat","replacedBy":[]},
+    {"ruleId":"no-return-await","replacedBy":[]}
+    ]
+}]

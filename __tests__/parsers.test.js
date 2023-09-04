@@ -19,11 +19,11 @@ beforeAll(() => {
 
 test('test readFile() for YAML', () => {
   const expected1 = {
-    key5: 'volue5',
-    key4: 'volue4',
-    key3: 'volue3.1',
+    key5: 'value5',
+    key4: 'value4',
+    key3: 'value3.1',
     key2: {
-      key22: 'volue2',
+      key22: 'value2',
     },
     withChildren: {
       children1: '----',
@@ -33,12 +33,12 @@ test('test readFile() for YAML', () => {
   expect(readFile(filepathYaml1)).toEqual(expected1);
 
   const expected2 = {
-    key3: 'volue3.2',
+    key3: 'value3.2',
     key2: {
-      key22: 'volue2',
+      key22: 'value2',
     },
-    key1: 'volue1',
-    key0: 'volue0',
+    key1: 'value1',
+    key0: 'value0',
     isYaml: true,
     withChildren: {
       children1: {

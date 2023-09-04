@@ -2,6 +2,7 @@ import readFile from './parsers.js';
 import genDiffTree from './gendifftree.js';
 import stylish from './formatters/stylish.js';
 import plain from './formatters/plain.js';
+import json from './formatters/json.js';
 
 const getFormattedDiff = (diffTree, formatter) => {
   switch (formatter) {
@@ -9,6 +10,8 @@ const getFormattedDiff = (diffTree, formatter) => {
       return stylish(diffTree);
     case 'plain':
       return plain(diffTree);
+    case 'json':
+      return json(diffTree);
     default:
       throw new Error(`Unknown formatter: ${formatter}!`);
   }

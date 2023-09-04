@@ -10,28 +10,28 @@ const getComplexOrQuotes = (value) => {
   return value;
 };
 
-const getString = (currentString, path, symbol, value) => {
+const getString = (currentString, path, status, value) => {
   const currentValue = getComplexOrQuotes(value);
   let valueFirst;
   let valueSecond;
 
-  if (symbol === '-+') {
+  if (status === 'changed') {
     [valueFirst, valueSecond] = value;
     valueFirst = getComplexOrQuotes(valueFirst);
     valueSecond = getComplexOrQuotes(valueSecond);
   }
 
-  switch (symbol) {
-    case null:
+  switch (status) {
+    case 'unchanged':
       return currentString;
-    case '-':
+    case 'remote':
       return `${currentString}\nProperty '${path}' was removed`;
-    case '+':
+    case 'added':
       return `${currentString}\nProperty '${path}' was added with value: ${currentValue}`;
-    case '-+':
+    case 'changed':
       return `${currentString}\nProperty '${path}' was updated. From ${valueFirst} to ${valueSecond}`;
     default:
-      throw new Error(`\nUnknown symbol: ${symbol}!`);
+      throw new Error(`\nUnknown status: ${status}!`);
   }
 };
 
@@ -41,15 +41,15 @@ const plain = (diffTree) => {
     const result = keys.reduce((acc, key) => {
       const currentPath = path === '' ? `${key}` : `${path}.${key}`;
       const currentValue = tree[key].value;
-      const { symbol } = tree[key];
-      if (symbol === '-+') {
+      const { status } = tree[key];
+      if (status === 'changed') {
         const arrValue = [tree[key].value1, tree[key].value2];
-        return getString(acc, currentPath, symbol, arrValue);
+        return getString(acc, currentPath, status, arrValue);
       } else if (_.isObject(currentValue)) {
         const tempAcc = iter(tree[key].value, currentPath, acc);
-        return getString(tempAcc, currentPath, symbol, currentValue);
+        return getString(tempAcc, currentPath, status, currentValue);
       }
-      return getString(acc, currentPath, symbol, currentValue);
+      return getString(acc, currentPath, status, currentValue);
     }, currentString);
     return result;
   };
