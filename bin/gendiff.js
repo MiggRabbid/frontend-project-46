@@ -12,3 +12,5 @@ program
     const diff = genDiff(filepath1, filepath2, type.format);
     console.log(diff);
   });
+
+program.parse();

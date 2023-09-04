@@ -1,6 +1,6 @@
 import readFile from './parsers.js';
 import genDiffTree from './gendifftree.js';
-import getFormattedDiff from './formatters/index.js';
+import getFormattedDiff from './formatters/getFromat.js';
 
 const genDiff = (filepath1, filepath2, formatter) => {
   const file1 = readFile(filepath1);

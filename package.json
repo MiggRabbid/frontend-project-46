@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "commander": "^11.0.0",
+    "gendiff": "1.0.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21"
   }
