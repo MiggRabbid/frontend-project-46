@@ -19,33 +19,33 @@ const treeJson1 = {
     value: {
       follow: {
         value: false,
-        symbol: '+',
+        status: 'added',
       },
       setting1: {
         value: 'Value 1',
-        symbol: null,
+        status: 'unchanged',
       },
       setting2: {
         value: 200,
-        symbol: '-',
+        status: 'remote',
       },
       setting3: {
         value1: true,
         value2: null,
-        symbol: '-+',
+        status: 'changed',
       },
       setting4: {
         value: 'blah blah',
-        symbol: '+',
+        status: 'added',
       },
       setting5: {
         value: {
           key5: {
             value: 'value5',
-            symbol: null,
+            status: 'unchanged',
           },
         },
-        symbol: '+',
+        status: 'added',
       },
       setting6: {
         value: {
@@ -54,66 +54,66 @@ const treeJson1 = {
               wow: {
                 value1: '',
                 value2: 'so much',
-                symbol: '-+',
+                status: 'changed',
               },
             },
-            symbol: null,
+            status: 'unchanged',
           },
           key: {
             value: 'value',
-            symbol: null,
+            status: 'unchanged',
           },
           ops: {
             value: 'vops',
-            symbol: '+',
+            status: 'added',
           },
         },
-        symbol: null,
+        status: 'unchanged',
       },
     },
-    symbol: null,
+    status: 'unchanged',
   },
   group1: {
     value: {
       baz: {
         value1: 'bas',
         value2: 'bars',
-        symbol: '-+',
+        status: 'changed',
       },
       foo: {
         value: 'bar',
-        symbol: null,
+        status: 'unchanged',
       },
       nest: {
         value1: {
           key: {
             value: 'value',
-            symbol: null,
+            status: 'unchanged',
           },
         },
         value2: 'str',
-        symbol: '-+',
+        status: 'changed',
       },
     },
-    symbol: null,
+    status: 'unchanged',
   },
   group2: {
     value: {
       abc: {
         value: 12345,
-        symbol: null,
+        status: 'unchanged',
       },
       deep: {
         value: {
           id: {
             value: 45,
-            symbol: null,
+            status: 'unchanged',
           },
         },
-        symbol: null,
+        status: 'unchanged',
       },
     },
-    symbol: '-',
+    status: 'remote',
   },
   group3: {
     value: {
@@ -123,20 +123,20 @@ const treeJson1 = {
             value: {
               number: {
                 value: 45,
-                symbol: null,
+                status: 'unchanged',
               },
             },
-            symbol: null,
+            status: 'unchanged',
           },
         },
-        symbol: null,
+        status: 'unchanged',
       },
       fee: {
         value: 100500,
-        symbol: null,
+        status: 'unchanged',
       },
     },
-    symbol: '+',
+    status: 'added',
   },
 };
 const treeJson2 = {
@@ -144,33 +144,33 @@ const treeJson2 = {
     value: {
       follow: {
         value: false,
-        symbol: '+',
+        status: 'added',
       },
       setting1: {
         value: 'Value 1',
-        symbol: null,
+        status: 'unchanged',
       },
       setting2: {
         value: 200,
-        symbol: '-',
+        status: 'remote',
       },
       setting3: {
         value1: true,
         value2: null,
-        symbol: '-+',
+        status: 'changed',
       },
       setting4: {
         value: 'blah blah',
-        symbol: '+',
+        status: 'added',
       },
       setting5: {
         value: {
           key5: {
             value: 'value5',
-            symbol: null,
+            status: 'unchanged',
           },
         },
-        symbol: '+',
+        status: 'added',
       },
       setting6: {
         value: {
@@ -179,66 +179,66 @@ const treeJson2 = {
               wow: {
                 value1: '',
                 value2: 'so much',
-                symbol: '-+',
+                status: 'changed',
               },
             },
-            symbol: null,
+            status: 'unchanged',
           },
           key: {
             value: 'value',
-            symbol: null,
+            status: 'unchanged',
           },
           ops: {
             value: 'vops',
-            symbol: '+',
+            status: 'added',
           },
         },
-        symbol: null,
+        status: 'unchanged',
       },
     },
-    symbol: null,
+    status: 'unchanged',
   },
   group1: {
     value: {
       baz: {
         value1: 'bas',
         value2: 'bars',
-        symbol: '-+',
+        status: 'changed',
       },
       foo: {
         value: 'bar',
-        symbol: null,
+        status: 'unchanged',
       },
       nest: {
         value1: 'str',
         value2: {
           key: {
             value: 'value',
-            symbol: null,
+            status: 'unchanged',
           },
         },
-        symbol: '-+',
+        status: 'changed',
       },
     },
-    symbol: null,
+    status: 'unchanged',
   },
   group2: {
     value: {
       abc: {
         value: 12345,
-        symbol: null,
+        status: 'unchanged',
       },
       deep: {
         value: {
           id: {
             value: 45,
-            symbol: null,
+            status: 'unchanged',
           },
         },
-        symbol: null,
+        status: 'unchanged',
       },
     },
-    symbol: '-',
+    status: 'remote',
   },
   group3: {
     value: {
@@ -248,20 +248,20 @@ const treeJson2 = {
             value: {
               number: {
                 value: 45,
-                symbol: null,
+                status: 'unchanged',
               },
             },
-            symbol: null,
+            status: 'unchanged',
           },
         },
-        symbol: null,
+        status: 'unchanged',
       },
       fee: {
         value: 100500,
-        symbol: null,
+        status: 'unchanged',
       },
     },
-    symbol: '+',
+    status: 'added',
   },
 };
 
@@ -281,13 +281,13 @@ test('test genDiffTree() for YAML', () => {
     isYaml: true,
   };
   const expected = {
-    isYaml: { value: true, symbol: null },
-    key0: { value: 'volue0', symbol: '+' },
-    key1: { value: 'volue1', symbol: '+' },
-    key2: { value: 'volue2', symbol: null },
-    key3: { value1: 'volue3.1', value2: 'volue3.2', symbol: '-+' },
-    key4: { value: 'volue4', symbol: '-' },
-    key5: { value: 'volue5', symbol: '-' },
+    isYaml: { value: true, status: 'unchanged' },
+    key0: { value: 'volue0', status: 'added' },
+    key1: { value: 'volue1', status: 'added' },
+    key2: { value: 'volue2', status: 'unchanged' },
+    key3: { value1: 'volue3.1', value2: 'volue3.2', status: 'changed' },
+    key4: { value: 'volue4', status: 'remote' },
+    key5: { value: 'volue5', status: 'remote' },
   };
   expect(genDiffTree(fileYaml1, fileYaml2)).toEqual(expected);
 });
