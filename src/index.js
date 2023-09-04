@@ -2,7 +2,6 @@ import readFile from './parsers.js';
 import genDiffTree from './gendifftree.js';
 import getFormattedDiff from './formatters/index.js';
 
-
 const genDiff = (filepath1, filepath2, formatter) => {
   const file1 = readFile(filepath1);
   const file2 = readFile(filepath2);
