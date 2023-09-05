@@ -2,10 +2,9 @@ name: ESLint check
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "develop"]
   pull_request: 
-
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
   schedule:
     - cron: '19 9 * * 1'
 
