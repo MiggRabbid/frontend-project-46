@@ -5,8 +5,9 @@ on:
     branches: [ "main", "develop"]
   pull_request: 
     branches: [ "main", "develop" ]
-  schedule:
-    - cron: '19 9 * * 1'
+
+env:
+  CI: true
 
 jobs:
   eslint:

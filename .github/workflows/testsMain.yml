@@ -1,15 +1,16 @@
 name: 'Test coverage'
 
 on:
-  - push
-  - pull_request
+  push:
+    branches: [ "main" ]
+  pull_request: 
+    branches: [ "main" ]
   
 env:
   CI: true
 
 jobs:
   build:
-
     runs-on:  ubuntu-latest
 
     strategy:
@@ -32,7 +33,7 @@ jobs:
     - name: Test & publish code coverage
     
       uses: paambaati/codeclimate-action@v3.2.0
-      
+
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:
