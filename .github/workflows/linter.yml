@@ -1,0 +1,32 @@
+name: ESLint check
+
+on:
+  push:
+    branches: [ "main", "develop"]
+  pull_request: 
+    branches: [ "main", "develop" ]
+
+env:
+  CI: true
+
+jobs:
+  eslint:
+    name: Run eslint scanning
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install ESLint
+        run: |
+          npm install eslint
+          npm install eslint-config-airbnb-base
+          npm install eslint-plugin-import
+
+      - name: Run ESLint
+        run: npx eslint .
+        continue-on-error: true
