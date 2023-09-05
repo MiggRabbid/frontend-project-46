@@ -9,18 +9,18 @@
 
 ---
 # «Вычислитель отличий»
-Вычислитель отличий – утилита командной строки (cli), определяющая разницу между двумя структурами данных.
-Это популярная задача, для решения которой существует множество онлайн сервисов, например http://www.jsondiff.com/. Подобный механизм используется при выводе тестов или при автоматическом отслеживании изменений в конфигурационных файлах.
+Вычислитель отличий – утилита командной строки (cli), определяющая разницу между двумя структурами данных. Это популярная задача, для решения которой существует множество онлайн сервисов, например http://www.jsondiff.com/. Подобный механизм используется при выводе тестов или при автоматическом отслеживании изменений в конфигурационных файлах.
 
 #### Возможности утилиты:
  - Поддержка разных входных форматов: yaml, json;
- - Генерация отчета в виде plain text, stylish и json.
- - По-умолчанию срабатывает встроенный форматтер "Stylish"
+ - Генерация отчета в виде "Plain text", "stylish" и "json".
+ - По-умолчанию используется встроенный форматтер "Stylish"
 
 #### Поддерживаемые форматы вывода:
 Утилита "Вычислитель" может выводить рузельтат в двух видах:
 - форматтер "Stylish" - выводит результат в вид дерева, где отличия помечаются "-" и "+";
 - форматтер "Plain" - выводит результат в строковом виде с описанием изменений;
+- форматтер "Json" - выводит результат в строковом JSON файле с описанием изменений;
 
 ## Пример использования
 #### Вызов стправочной информации:
@@ -40,7 +40,11 @@ difference.
 [![asciicast](https://asciinema.org/a/604451.svg)](https://asciinema.org/a/604451)
 
 #### Запуск вычислителя отличий:
-По-умолчанию используется форматтер "Stylish". Для Выбора конретного форматтера используйте опцию выбора форматтера: `-f` или `--format`, с аргументами: `stylish` для "Stylish", `plain` для "Plain"
+По-умолчанию используется форматтер "Stylish". Для Выбора конретного форматтера используйте опцию выбора форматтера: `-f` или `--format`, с аргументами:
+- `stylish` для "Stylish";
+- `plain` для "Plain";
+- `json` для "Json"
+
 ```
 gendiff ./data/file1.json ./data/file2.json
 //or gendiff -f stylish ./data/file1.json ./data/file2.json
@@ -65,7 +69,12 @@ Property 'proxy' was removed
 Property 'timeout' was updated. From 50 to 20
 Property 'verbose' was added with value: 'true'
 ```
-[![asciicast](https://asciinema.org/a/605858.svg)](https://asciinema.org/a/605858)
+```
+gendiff --format json ./data/file3.json ./data/file4.json
+
+[{"file1":[{"name":"file3.json"},{"extName":".json"},{"path":"data/file3.json"}],"file2":[{"name":"file4.json"},{"extName":".json"},{"path":"data/file4.json"}],"changedLines":[{"remote":2},{"added":5},{"changed":4},{"unchanged":3}],"diffTree":[{"common":{"value":{"follow":{"value":false,"status":"added"},"setting1":{"value":"Value1","status":"unchanged"},"setting2":{"value":200,"status":"remote"},"setting3":{"value1":true,"value2":null,"status":"changed"},"setting4":{"value":"blahblah","status":"added"},"setting5":{"value":{"key5":{"value":"value5","status":"unchanged"}},"status":"added"},"setting6":{"value":{"doge":{"value":{"wow":{"value1":"","value2":"somuch","status":"changed"}},"status":"unchanged"},"key":{"value":"value","status":"unchanged"},"ops":{"value":"vops","status":"added"}},"status":"unchanged"}},"status":"unchanged"},"group1":{"value":{"baz":{"value1":"bas","value2":"bars","status":"changed"},"foo":{"value":"bar","status":"unchanged"},"nest":{"value1":{"key":{"value":"value","status":"unchanged"}},"value2":"str","status":"changed"}},"status":"unchanged"},"group2":{"value":{"abc":{"value":12345,"status":"unchanged"},"deep":{"value":{"id":{"value":45,"status":"unchanged"}},"status":"unchanged"}},"status":"remote"},"group3":{"value":{"deep":{"value":{"id":{"value":{"number":{"value":45,"status":"unchanged"}},"status":"unchanged"}},"status":"unchanged"},"fee":{"value":100500,"status":"unchanged"}},"status":"added"}}]}]
+```
+[![asciicast](https://asciinema.org/a/606310.svg)](https://asciinema.org/a/606310)
 ---
 ## Порядок установки и системные требования
 #### Порядок установки:
