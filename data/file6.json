@@ -1,9 +1,0 @@
-{
-    "timeout": 20,
-    "verbose": "true",
-    "host": "hexlet.io",
-    "newObject": {
-        "key1": "value1",
-        "key2": "value2"
-    }
-}

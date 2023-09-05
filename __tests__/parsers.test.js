@@ -19,31 +19,62 @@ beforeAll(() => {
 
 test('test readFile() for YAML', () => {
   const expected1 = {
-    key5: 'value5',
-    key4: 'value4',
-    key3: 'value3.1',
-    key2: {
-      key22: 'value2',
+    common: {
+      setting1: 'Value 1',
+      setting2: 200,
+      setting3: true,
+      setting6: {
+        key: 'value',
+        doge: {
+          wow: '',
+        },
+      },
     },
-    withChildren: {
-      children1: '----',
+    group1: {
+      baz: 'bas',
+      foo: 'bar',
+      nest: {
+        key: 'value',
+      },
     },
-    isYaml: true,
+    group2: {
+      abc: 12345,
+      deep: {
+        id: 45,
+      },
+    },
   };
   expect(readFile(filepathYaml1)).toEqual(expected1);
 
   const expected2 = {
-    key3: 'value3.2',
-    key2: {
-      key22: 'value2',
-    },
-    key1: 'value1',
-    key0: 'value0',
-    isYaml: true,
-    withChildren: {
-      children1: {
-        children2: '+++',
+    common: {
+      follow: false,
+      setting1: 'Value 1',
+      setting3: null,
+      setting4: 'blah blah',
+      setting5: {
+        key5: 'value5',
       },
+      setting6: {
+        key: 'value',
+        ops: 'vops',
+        doge: {
+          wow: 'so much',
+        },
+      },
+    },
+    group1: {
+      foo: 'bar',
+      baz: 'bars',
+      nest: 'str',
+    },
+    group3: {
+      deep: {
+        id: {
+          number: 45,
+        },
+      },
+      fee: 100500,
     },
   };
   expect(readFile(filepathYaml2)).toEqual(expected2);

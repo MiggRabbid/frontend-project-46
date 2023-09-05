@@ -1,14 +1,31 @@
 {
-    key3: "value3.2",
-    key2: {
-        key22: "value2" 
+  common: {
+    follow: false,
+    setting1: "Value 1",
+    setting3: null,
+    setting4: "blah blah",
+    setting5: {
+      key5: "value5"
     },
-    key1: "value1",
-    key0: "value0",
-    isYaml: true,
-    withChildren: {
-        children1: {
-            children2: '+++'
-        }
+    setting6: {
+      key: "value",
+      ops: "vops",
+      doge: {
+        wow: "so much"
+      }
+    }
+  },
+  group1: {
+    foo: "bar",
+    baz: "bars",
+    nest: "str"
+  },
+  group3: {
+    deep: {
+      id: {
+        number: 45
+      }
     },
+    fee: 100500
+  }
 }
