@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import YAML from 'js-yaml';
+import yaml from 'js-yaml';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
@@ -55,17 +55,17 @@ test('test genDiffTree() for YAML', () => {
 test('test genDiffTree() for JSON', () => {
   const fileJson1 = JSON.parse(readFileSync(filepathJson1, 'utf-8'));
   const fileJson2 = JSON.parse(readFileSync(filepathJson2, 'utf-8'));
-  const expected1 = YAML.load(readFileSync(filepathTree1, 'utf-8'));
+  const expected1 = yaml.load(readFileSync(filepathTree1, 'utf-8'));
   expect(genDiffTree(fileJson1, fileJson2)).toEqual(expected1);
 
   const fileJson3 = JSON.parse(readFileSync(filepathJson3, 'utf-8'));
   const fileJson4 = JSON.parse(readFileSync(filepathJson4, 'utf-8'));
-  const expected2 = YAML.load(readFileSync(filepathTree2, 'utf-8'));
+  const expected2 = yaml.load(readFileSync(filepathTree2, 'utf-8'));
   expect(genDiffTree(fileJson3, fileJson4)).toEqual(expected2);
 });
 
 test('test getFormattedDiff() throw new Error', () => {
-  const treeJson1 = YAML.load(readFileSync(filepathTree1, 'utf-8'));
+  const treeJson1 = yaml.load(readFileSync(filepathTree1, 'utf-8'));
   function getDiff() {
     getFormattedDiff(treeJson1, 'undefined');
   }

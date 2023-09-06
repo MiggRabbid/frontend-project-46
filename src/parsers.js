@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-import YAML from 'js-yaml';
+import yaml from 'js-yaml';
 
 const readFile = (filepath) => {
   const extName = path.extname(filepath);
@@ -11,7 +11,7 @@ const readFile = (filepath) => {
       return JSON.parse(readFileSync(fullPath, 'utf-8'));
     case '.yaml':
     case '.yml':
-      return YAML.load(readFileSync(fullPath, 'utf-8'));
+      return yaml.load(readFileSync(fullPath, 'utf-8'));
     default:
       throw new Error(`Unknown extName: ${extName}!`);
   }

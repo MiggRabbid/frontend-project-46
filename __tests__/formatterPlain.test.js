@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import YAML from 'js-yaml';
+import yaml from 'js-yaml';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
@@ -19,7 +19,7 @@ beforeAll(() => {
 });
 
 test('test formatter Plain', () => {
-  const tree1 = YAML.load(readFileSync(filepathTree1, 'utf-8'));
+  const tree1 = yaml.load(readFileSync(filepathTree1, 'utf-8'));
   const expected1 = `Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to null
@@ -34,7 +34,7 @@ Property 'group3' was added with value: [complex value]`;
 
   expect(plain(tree1)).toBe(expected1);
 
-  const tree2 = YAML.load(readFileSync(filepathTree2, 'utf-8'));
+  const tree2 = yaml.load(readFileSync(filepathTree2, 'utf-8'));
   const expected2 = `Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to null
@@ -51,7 +51,7 @@ Property 'group3' was added with value: [complex value]`;
 });
 
 test('test formatter plain throw new Error', () => {
-  const tree3 = YAML.load(readFileSync(filepathTree3, 'utf-8'));
+  const tree3 = yaml.load(readFileSync(filepathTree3, 'utf-8'));
   function diffString() {
     plain(tree3);
   }
