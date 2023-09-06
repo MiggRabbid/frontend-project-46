@@ -67,7 +67,7 @@ test('test genDiffTree() for JSON', () => {
 test('test getFormattedDiff() throw new Error', () => {
   const treeJson1 = yaml.load(readFileSync(filepathTree1, 'utf-8'));
   function getDiff() {
-    getFormattedDiff(treeJson1, 'undefined');
+    getFormattedDiff('undefined', treeJson1);
   }
   expect(getDiff).toThrow('Unknown formatter: undefined!');
 });

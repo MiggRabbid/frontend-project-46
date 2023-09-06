@@ -107,6 +107,7 @@ Property 'group4.type' was updated. From 'bas' to 'bar'`;
 test('test genDiff() formatter = default', () => {
   expect(genDiff(filepathJson1, filepathJson2)).toBe(expected1);
   expect(genDiff(filepathYaml1, filepathYaml2)).toBe(expected1);
+  expect(genDiff(filepathYaml1, filepathJson2)).toBe(expected1);
 });
 
 test('test genDiff() formatter = stylish', () => {

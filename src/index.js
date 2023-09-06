@@ -6,7 +6,7 @@ const genDiff = (filepath1, filepath2, formatter = 'stylish') => {
   const file1 = readFile(filepath1);
   const file2 = readFile(filepath2);
   const diffTree = genDiffTree(file1, file2);
-  const diff = getFormattedDiff(diffTree, formatter);
+  const diff = getFormattedDiff(formatter, diffTree);
   return diff;
 };
 
