@@ -115,5 +115,5 @@ test('test readFile() throw new Error', () => {
   function getError() {
     readFile(wrongFilepathYaml2);
   }
-  expect(getError).toThrow('Unknown extName: .com!');
+  expect(getError).toThrow('Unknown extName: com!');
 });
