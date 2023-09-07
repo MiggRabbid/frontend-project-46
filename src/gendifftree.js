@@ -1,12 +1,16 @@
 import _ from 'lodash';
 
-const genDiffTree = (file1, file2 = {}) => {
+const getSortedKey = (file1, file2) => {
   const keysFromFiles = _.uniq(Object.keys(file1).concat(Object.keys(file2)));
-  const sortKey = _.sortBy(keysFromFiles);
+  return _.sortBy(keysFromFiles);
+};
+
+const genDiffTree = (file1, file2 = {}) => {
+  const sortKey = getSortedKey(file1, file2);
   const diffTree = sortKey.reduce((acc, key) => {
     if (_.has(file1, key) && !_.has(file2, key)) {
       const currentValue = _.cloneDeep(file1[key]);
-      const temp = _.isObject(currentValue) ? genDiffTree(currentValue) : _.cloneDeep(currentValue);
+      const temp = _.isObject(currentValue) ? genDiffTree(currentValue) : currentValue;
       if (Object.keys(file2).length === 0) {
         return {
           ...acc,
@@ -20,7 +24,7 @@ const genDiffTree = (file1, file2 = {}) => {
     }
     if (!_.has(file1, key) && _.has(file2, key)) {
       const currentValue = _.cloneDeep(file2[key]);
-      const temp = _.isObject(currentValue) ? genDiffTree(currentValue) : _.cloneDeep(currentValue);
+      const temp = _.isObject(currentValue) ? genDiffTree(currentValue) : currentValue;
       return {
         ...acc,
         [key]: { value: temp, status: 'added' },
