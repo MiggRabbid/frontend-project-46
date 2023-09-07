@@ -6,59 +6,47 @@ const genDiffTree = (file1, file2 = {}) => {
   const diffTree = sortKey.reduce((acc, key) => {
     if (_.has(file1, key) && !_.has(file2, key)) {
       const currentValue = _.cloneDeep(file1[key]);
+      const temp = _.isObject(currentValue) ? genDiffTree(currentValue) : _.cloneDeep(currentValue);
       if (Object.keys(file2).length === 0) {
         return {
           ...acc,
-          [key]: {
-            value: _.isObject(currentValue) ? genDiffTree(currentValue) : _.cloneDeep(currentValue),
-            status: 'unchanged',
-          },
+          [key]: { value: temp, status: 'unchanged' },
         };
       }
       return {
         ...acc,
-        [key]: {
-          value: _.isObject(currentValue) ? genDiffTree(currentValue) : _.cloneDeep(currentValue),
-          status: 'remote',
-        },
+        [key]: { value: temp, status: 'remote' },
       };
     }
     if (!_.has(file1, key) && _.has(file2, key)) {
       const currentValue = _.cloneDeep(file2[key]);
+      const temp = _.isObject(currentValue) ? genDiffTree(currentValue) : _.cloneDeep(currentValue);
       return {
         ...acc,
-        [key]: {
-          value: _.isObject(currentValue) ? genDiffTree(currentValue) : _.cloneDeep(currentValue),
-          status: 'added',
-        },
+        [key]: { value: temp, status: 'added' },
       };
     }
-    const tempValue1 = _.cloneDeep(file1[key]);
-    const tempValue2 = _.cloneDeep(file2[key]);
-    if (_.isObject(tempValue1) && _.isObject(tempValue2)) {
+    const currentValue1 = _.cloneDeep(file1[key]);
+    const currentValue2 = _.cloneDeep(file2[key]);
+    const temp1 = _.isObject(currentValue1) ? genDiffTree(currentValue1) : currentValue1;
+    const temp2 = _.isObject(currentValue2) ? genDiffTree(currentValue2) : currentValue2;
+    if (_.isObject(currentValue1) && _.isObject(currentValue2)) {
       return {
         ...acc,
         [key]: {
-          value: genDiffTree(tempValue1, tempValue2),
+          value: genDiffTree(currentValue1, currentValue2),
           status: 'unchanged',
         },
       };
-    } if (tempValue1 === tempValue2) {
+    } if (currentValue1 === currentValue2) {
       return {
         ...acc,
-        [key]: {
-          value: tempValue1,
-          status: 'unchanged',
-        },
+        [key]: { value: currentValue1, status: 'unchanged' },
       };
     }
     return {
       ...acc,
-      [key]: {
-        value1: _.isObject(tempValue1) ? genDiffTree(tempValue1) : _.cloneDeep(tempValue1),
-        value2: _.isObject(tempValue2) ? genDiffTree(tempValue2) : _.cloneDeep(tempValue2),
-        status: 'changed',
-      },
+      [key]: { value1: temp1, value2: temp2, status: 'changed' },
     };
   }, {});
 
