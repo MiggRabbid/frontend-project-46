@@ -42,7 +42,8 @@ const genDiffTree = (file1, file2 = {}) => {
           status: 'unchanged',
         },
       };
-    } if (currentValue1 === currentValue2) {
+    }
+    if (currentValue1 === currentValue2) {
       return {
         ...acc,
         [key]: { value: currentValue1, status: 'unchanged' },
