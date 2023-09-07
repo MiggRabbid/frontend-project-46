@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-import yaml from 'js-yaml';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
@@ -13,27 +12,29 @@ beforeAll(() => {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
   const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-  filepathTree1 = getFixturePath('tree1.yml');
-  filepathTree2 = getFixturePath('tree2.yml');
-  filepathTree3 = getFixturePath('tree3.yml');
+  filepathTree1 = getFixturePath('tree1.json');
+  filepathTree2 = getFixturePath('tree2.json');
+  filepathTree3 = getFixturePath('tree3.json');
 });
 
 test('test formatter Stylish', () => {
-  const tree1 = yaml.load(readFileSync(filepathTree1, 'utf-8'));
+  const tree1 = JSON.parse(readFileSync(filepathTree1, 'utf-8'));
   const expected1 = `{
     common: {
       + follow: false
         setting1: Value 1
       - setting2: 200
       - setting3: true
-      + setting3: null
+      + setting3: {
+            key: value
+        }
       + setting4: blah blah
       + setting5: {
             key5: value5
         }
         setting6: {
             doge: {
-              - wow: 
+              - wow: too much
               + wow: so much
             }
             key: value
@@ -63,24 +64,44 @@ test('test formatter Stylish', () => {
         }
         fee: 100500
     }
+    group4: {
+      - default: null
+      + default: 
+      - foo: 0
+      + foo: null
+      - isNested: false
+      + isNested: none
+      + key: false
+        nest: {
+          - bar: 
+          + bar: 0
+          - isNested: true
+        }
+      + someKey: true
+      - type: bas
+      + type: bar
+    }
+    language: js
 }`;
   expect(stylish(tree1)).toBe(expected1);
 
-  const tree2 = yaml.load(readFileSync(filepathTree2, 'utf-8'));
+  const tree2 = JSON.parse(readFileSync(filepathTree2, 'utf-8'));
   const expected2 = `{
     common: {
       + follow: false
         setting1: Value 1
       - setting2: 200
       - setting3: true
-      + setting3: null
+      + setting3: {
+            key: value
+        }
       + setting4: blah blah
       + setting5: {
             key5: value5
         }
         setting6: {
             doge: {
-              - wow: 
+              - wow: too much
               + wow: so much
             }
             key: value
@@ -91,10 +112,10 @@ test('test formatter Stylish', () => {
       - baz: bas
       + baz: bars
         foo: bar
-      - nest: str
-      + nest: {
+      - nest: {
             key: value
         }
+      + nest: str
     }
   - group2: {
         abc: 12345
@@ -110,14 +131,32 @@ test('test formatter Stylish', () => {
         }
         fee: 100500
     }
+    group4: {
+      - default: null
+      + default: 
+      - foo: 0
+      + foo: null
+      - isNested: none
+      + isNested: false
+      + key: false
+        nest: {
+          - bar: 
+          + bar: 0
+          - isNested: true
+        }
+      + someKey: true
+      - type: bas
+      + type: bar
+    }
+    language: js
 }`;
   expect(stylish(tree2)).toBe(expected2);
 });
 
 test('test formatter Stylish throw new Error', () => {
-  const tree3 = yaml.load(readFileSync(filepathTree3, 'utf-8'));
+  const tree3 = JSON.parse(readFileSync(filepathTree3, 'utf-8'));
   function diffString() {
     stylish(tree3);
   }
-  expect(diffString).toThrow('Unknown status: unadded!');
+  expect(diffString).toThrow('Unknown status: wrongStatus!');
 });
