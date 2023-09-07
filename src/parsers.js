@@ -11,6 +11,7 @@ const readFile = (filepath) => {
     case 'json':
       return JSON.parse(data);
     case 'yaml':
+      return yaml.load(data);
     case 'yml':
       return yaml.load(data);
     default:
