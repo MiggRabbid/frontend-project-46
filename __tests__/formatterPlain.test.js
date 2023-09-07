@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { readFileSync } from 'node:fs';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import plain from '../src/formatters/plain.js';
@@ -18,7 +18,7 @@ beforeAll(() => {
 });
 
 test('test formatter Plain', () => {
-  const tree1 = JSON.parse(readFileSync(filepathTree1, 'utf-8'));
+  const tree1 = JSON.parse(fs.readFileSync(filepathTree1, 'utf-8'));
   const expected1 = `Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to [complex value]
@@ -40,7 +40,7 @@ Property 'group4.someKey' was added with value: true
 Property 'group4.type' was updated. From 'bas' to 'bar'`;
   expect(plain(tree1)).toBe(expected1);
 
-  const tree2 = JSON.parse(readFileSync(filepathTree2, 'utf-8'));
+  const tree2 = JSON.parse(fs.readFileSync(filepathTree2, 'utf-8'));
   const expected2 = `Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to [complex value]
@@ -65,7 +65,7 @@ Property 'group4.type' was updated. From 'bas' to 'bar'`;
 });
 
 test('test formatter plain throw new Error', () => {
-  const tree3 = JSON.parse(readFileSync(filepathTree3, 'utf-8'));
+  const tree3 = JSON.parse(fs.readFileSync(filepathTree3, 'utf-8'));
   function diffString() {
     plain(tree3);
   }

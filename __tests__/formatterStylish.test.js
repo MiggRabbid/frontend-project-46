@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { readFileSync } from 'node:fs';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import stylish from '../src/formatters/stylish.js';
@@ -18,7 +18,7 @@ beforeAll(() => {
 });
 
 test('test formatter Stylish', () => {
-  const tree1 = JSON.parse(readFileSync(filepathTree1, 'utf-8'));
+  const tree1 = JSON.parse(fs.readFileSync(filepathTree1, 'utf-8'));
   const expected1 = `{
     common: {
       + follow: false
@@ -85,7 +85,7 @@ test('test formatter Stylish', () => {
 }`;
   expect(stylish(tree1)).toBe(expected1);
 
-  const tree2 = JSON.parse(readFileSync(filepathTree2, 'utf-8'));
+  const tree2 = JSON.parse(fs.readFileSync(filepathTree2, 'utf-8'));
   const expected2 = `{
     common: {
       + follow: false
@@ -154,7 +154,7 @@ test('test formatter Stylish', () => {
 });
 
 test('test formatter Stylish throw new Error', () => {
-  const tree3 = JSON.parse(readFileSync(filepathTree3, 'utf-8'));
+  const tree3 = JSON.parse(fs.readFileSync(filepathTree3, 'utf-8'));
   function diffString() {
     stylish(tree3);
   }

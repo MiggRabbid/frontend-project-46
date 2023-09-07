@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import fs from 'fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
 
@@ -18,7 +18,7 @@ const parser = (extName, data) => {
 const readFile = (filepath) => {
   const extName = path.extname(filepath).slice(1);
   const fullPath = path.resolve(process.cwd(), filepath);
-  const data = readFileSync(fullPath, 'utf-8');
+  const data = fs.readFileSync(fullPath, 'utf-8');
   return parser(extName, data);
 };
 
