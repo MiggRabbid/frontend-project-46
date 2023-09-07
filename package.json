@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Вычислитель отличий - cравнивает два файла конфигурации и показывает разницу.",
   "main": "src/index.js",
-  "scripts": {
-    "test": "jest"
+  "bin": {
+    "gendiff": "bin/gendiff.js"
   },
   "repository": {
     "type": "git",
@@ -12,10 +12,10 @@
   },
   "author": "MiggRabbid",
   "license": "ISC",
-  "type": "module",
-  "bin": {
-    "gendiff": "bin/gendiff.js"
+  "scripts": {
+    "test": "jest"
   },
+  "type": "module",
   "bugs": {
     "url": "https://github.com/MiggRabbid/frontend-project-46/issues"
   },
@@ -29,8 +29,8 @@
   },
   "dependencies": {
     "commander": "^11.0.0",
-    "gendiff": "1.0.0",
     "js-yaml": "^4.1.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "yaml": "^2.3.2"
   }
 }
