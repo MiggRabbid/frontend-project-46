@@ -2,11 +2,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
 
-const readFile = (filepath) => {
-  const extName = path.extname(filepath).slice(1);
-  const fullPath = path.resolve(process.cwd(), filepath);
-  const data = readFileSync(fullPath, 'utf-8');
-
+const parser = (extName, data) => {
   switch (extName) {
     case 'json':
       return JSON.parse(data);
@@ -17,6 +13,13 @@ const readFile = (filepath) => {
     default:
       throw new Error(`Unknown extName: ${extName}!`);
   }
+};
+
+const readFile = (filepath) => {
+  const extName = path.extname(filepath).slice(1);
+  const fullPath = path.resolve(process.cwd(), filepath);
+  const data = readFileSync(fullPath, 'utf-8');
+  return parser(extName, data);
 };
 
 export default readFile;
