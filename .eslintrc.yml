@@ -1,21 +1,28 @@
+plugins:
+  - jest
+  - fp
+
 env:
-  browser: true
-  es2021: true
-  
+  node: true
+  jest: true
+  es2020: true
+
 extends:
   - airbnb-base
-
-overrides: []
+  - "plugin:jest/recommended"
+  - "plugin:fp/recommended"
 
 parserOptions:
-  ecmaVersion: latest
-  sourceType: module
+  ecmaVersion: 2020
 
-rules: {
-  no-console: 0,
-  import/extensions: 0,
-  no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }],
-  consistent-return: 0,
-  array-callback-return: 0,
-  no-else-return: 0
-}
+rules:
+  no-console: 0
+  import/extensions: 0 
+  no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
+  fp/no-nil: 0
+  fp/no-unused-expression: 0
+  fp/no-throw: 0
+  fp/no-mutating-methods:
+    - error
+    - allowedObjects:
+      - "_"

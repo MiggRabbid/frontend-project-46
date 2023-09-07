@@ -3,21 +3,14 @@ import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import readFile from '../src/parsers.js';
 
-let filepathJson1;
-let filepathYaml1;
-let filepathYml1;
-let wrongFilepathCom1;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
-beforeAll(() => {
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = dirname(__filename);
-  const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-
-  filepathJson1 = getFixturePath('file1.json');
-  filepathYaml1 = getFixturePath('file1.yaml');
-  filepathYml1 = getFixturePath('file1.yml');
-  wrongFilepathCom1 = getFixturePath('file1.com');
-});
+const filepathJson1 = getFixturePath('file1.json');
+const filepathYaml1 = getFixturePath('file1.yaml');
+const filepathYml1 = getFixturePath('file1.yml');
+const wrongFilepathCom1 = getFixturePath('file1.com');
 
 const expected = {
   common: {
@@ -57,17 +50,17 @@ const expected = {
   language: 'js',
 };
 
-test('test readFile() for JSON', () => {
+test('Result with JSON', () => {
   expect(readFile(filepathJson1)).toEqual(expected);
 });
 
-test('test readFile() for YAML', () => {
+test('Result with YAML', () => {
   expect(readFile(filepathYaml1)).toEqual(expected);
 
   expect(readFile(filepathYml1)).toEqual(expected);
 });
 
-test('test readFile() throw new Error', () => {
+test('Result with throw new Error', () => {
   function getError() {
     readFile(wrongFilepathCom1);
   }

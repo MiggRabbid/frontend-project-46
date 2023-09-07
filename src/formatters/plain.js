@@ -3,9 +3,11 @@ import _ from 'lodash';
 const getComplexOrQuotes = (value) => {
   if (_.isString(value)) {
     return `'${value}'`;
-  } else if (Array.isArray(value)) {
+  }
+  if (Array.isArray(value)) {
     return [getComplexOrQuotes(value[0]), getComplexOrQuotes(value[1])];
-  } else if (_.isObject(value)) {
+  }
+  if (_.isObject(value)) {
     return '[complex value]';
   }
   return value;
@@ -37,7 +39,8 @@ const plain = (diffTree) => {
       if (status === 'changed') {
         const arrValue = [tree[key].value1, tree[key].value2];
         return getString(acc, currentPath, status, arrValue);
-      } else if (_.isObject(currentValue)) {
+      }
+      if (_.isObject(currentValue)) {
         const tempAcc = iter(tree[key].value, currentPath, acc);
         return getString(tempAcc, currentPath, status, currentValue);
       }
