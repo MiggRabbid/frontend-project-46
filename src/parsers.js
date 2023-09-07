@@ -1,15 +1,15 @@
 import fs from 'fs';
 import path from 'node:path';
-import yaml from 'js-yaml';
+import YAML from 'yaml'
 
 const parser = (extName, data) => {
   switch (extName) {
     case 'json':
       return JSON.parse(data);
     case 'yaml':
-      return yaml.load(data);
+      return YAML.parse(data);
     case 'yml':
-      return yaml.load(data);
+      return YAML.parse(data);
     default:
       throw new Error(`Unknown extName: ${extName}!`);
   }
