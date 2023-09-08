@@ -32,8 +32,6 @@ const genDiffTree = (file1, file2 = {}) => {
     }
     const currentValue1 = _.cloneDeep(file1[key]);
     const currentValue2 = _.cloneDeep(file2[key]);
-    const temp1 = _.isObject(currentValue1) ? genDiffTree(currentValue1) : currentValue1;
-    const temp2 = _.isObject(currentValue2) ? genDiffTree(currentValue2) : currentValue2;
     if (_.isObject(currentValue1) && _.isObject(currentValue2)) {
       return {
         ...acc,
@@ -49,6 +47,8 @@ const genDiffTree = (file1, file2 = {}) => {
         [key]: { value: currentValue1, status: 'unchanged' },
       };
     }
+    const temp1 = _.isObject(currentValue1) ? genDiffTree(currentValue1) : currentValue1;
+    const temp2 = _.isObject(currentValue2) ? genDiffTree(currentValue2) : currentValue2;
     return {
       ...acc,
       [key]: { value1: temp1, value2: temp2, status: 'changed' },
