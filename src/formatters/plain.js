@@ -34,18 +34,22 @@ const plain = (diffTree) => {
     const keys = Object.keys(tree);
     const result = keys.reduce((acc, key) => {
       const currentPath = path === '' ? `${key}` : `${path}.${key}`;
-      const currentValue = tree[key].value;
       const { status } = tree[key];
+
       if (status === 'changed') {
         const arrValue = [tree[key].value1, tree[key].value2];
         return getString(acc, currentPath, status, arrValue);
       }
+
+      const currentValue = tree[key].value;
       if (_.isObject(currentValue)) {
         const tempAcc = iter(tree[key].value, currentPath, acc);
         return getString(tempAcc, currentPath, status, currentValue);
       }
+
       return getString(acc, currentPath, status, currentValue);
     }, currentString);
+
     return result;
   };
   const diffString = iter(diffTree).replace('\n', '');
