@@ -17,6 +17,7 @@ const getString = (currentString, path, status, value) => {
   const currentValue = getComplexOrQuotes(value);
   switch (status) {
     case 'unchanged':
+    case undefined:
       return currentString;
     case 'remote':
       return `${currentString}\nProperty '${path}' was removed`;
@@ -25,7 +26,7 @@ const getString = (currentString, path, status, value) => {
     case 'changed':
       return `${currentString}\nProperty '${path}' was updated. From ${currentValue[0]} to ${currentValue[1]}`;
     default:
-      throw new Error(`\nUnknown status: ${status}!`);
+      throw new Error(`Unknown status: ${status}!`);
   }
 };
 
@@ -34,14 +35,18 @@ const plain = (diffTree) => {
     const keys = Object.keys(tree);
     const result = keys.reduce((acc, key) => {
       const currentPath = path === '' ? `${key}` : `${path}.${key}`;
-      const currentValue = tree[key].value;
+      const currentValue = _.cloneDeep(tree[key].value);
       const { status } = tree[key];
       if (status === 'changed') {
-        const arrValue = [tree[key].value1, tree[key].value2];
-        return getString(acc, currentPath, status, arrValue);
+        const currentValue1 = _.cloneDeep(tree[key].value1);
+        const currentValue2 = _.cloneDeep(tree[key].value2);
+        return getString(acc, currentPath, status, [currentValue1, currentValue2]);
+      }
+      if (_.isObject(currentValue) && !_.has(tree[key], 'status')) {
+        return getString(acc, currentPath, status, currentValue);
       }
       if (_.isObject(currentValue)) {
-        const tempAcc = iter(tree[key].value, currentPath, acc);
+        const tempAcc = iter(currentValue, currentPath, acc);
         return getString(tempAcc, currentPath, status, currentValue);
       }
       return getString(acc, currentPath, status, currentValue);

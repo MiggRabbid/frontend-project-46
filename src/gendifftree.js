@@ -10,30 +10,20 @@ const genDiffTree = (file1, file2 = {}) => {
   const diffTree = sortKey.reduce((acc, key) => {
     if (_.has(file1, key) && !_.has(file2, key)) {
       const currentValue = _.cloneDeep(file1[key]);
-      const temp = _.isObject(currentValue) ? genDiffTree(currentValue) : currentValue;
-      if (Object.keys(file2).length === 0) {
-        return {
-          ...acc,
-          [key]: { value: temp, status: 'unchanged' },
-        };
-      }
       return {
         ...acc,
-        [key]: { value: temp, status: 'remote' },
+        [key]: { value: currentValue, status: 'remote' },
       };
     }
     if (!_.has(file1, key) && _.has(file2, key)) {
       const currentValue = _.cloneDeep(file2[key]);
-      const temp = _.isObject(currentValue) ? genDiffTree(currentValue) : currentValue;
       return {
         ...acc,
-        [key]: { value: temp, status: 'added' },
+        [key]: { value: currentValue, status: 'added' },
       };
     }
     const currentValue1 = _.cloneDeep(file1[key]);
     const currentValue2 = _.cloneDeep(file2[key]);
-    const temp1 = _.isObject(currentValue1) ? genDiffTree(currentValue1) : currentValue1;
-    const temp2 = _.isObject(currentValue2) ? genDiffTree(currentValue2) : currentValue2;
     if (_.isObject(currentValue1) && _.isObject(currentValue2)) {
       return {
         ...acc,
@@ -43,7 +33,7 @@ const genDiffTree = (file1, file2 = {}) => {
         },
       };
     }
-    if (currentValue1 === currentValue2) {
+    if (_.isEqual(currentValue1, currentValue2)) {
       return {
         ...acc,
         [key]: { value: currentValue1, status: 'unchanged' },
@@ -51,7 +41,7 @@ const genDiffTree = (file1, file2 = {}) => {
     }
     return {
       ...acc,
-      [key]: { value1: temp1, value2: temp2, status: 'changed' },
+      [key]: { value1: currentValue1, value2: currentValue2, status: 'changed' },
     };
   }, {});
 

@@ -152,5 +152,5 @@ test('Result with throw new Error', () => {
   function diffString() {
     stylish(tree3);
   }
-  expect(diffString).toThrow('Unknown status: wrongStatus!');
+  expect(diffString).toThrow('Unknown status: \'wrong status\'!');
 });
