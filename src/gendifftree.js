@@ -1,12 +1,8 @@
 import _ from 'lodash';
 
-const getSortedKey = (file1, file2) => {
-  const keysFromFiles = _.uniq(Object.keys(file1).concat(Object.keys(file2)));
-  return _.sortBy(keysFromFiles);
-};
-
 const genDiffTree = (file1, file2 = {}) => {
-  const sortKey = getSortedKey(file1, file2);
+  const keysFromFiles = _.uniq(Object.keys(file1).concat(Object.keys(file2)));
+  const sortKey = _.sortBy(keysFromFiles);
   const diffTree = sortKey.reduce((acc, key) => {
     if (_.has(file1, key) && !_.has(file2, key)) {
       const currentValue = _.cloneDeep(file1[key]);
@@ -14,12 +10,12 @@ const genDiffTree = (file1, file2 = {}) => {
       if (Object.keys(file2).length === 0) {
         return {
           ...acc,
-          [key]: { value: temp, status: 'unchanged' },
+          [key]: { value: temp, type: 'unchanged' },
         };
       }
       return {
         ...acc,
-        [key]: { value: temp, status: 'remote' },
+        [key]: { value: temp, type: 'remote' },
       };
     }
 
@@ -28,7 +24,7 @@ const genDiffTree = (file1, file2 = {}) => {
       const temp = _.isObject(currentValue) ? genDiffTree(currentValue) : currentValue;
       return {
         ...acc,
-        [key]: { value: temp, status: 'added' },
+        [key]: { value: temp, type: 'added' },
       };
     }
 
@@ -39,7 +35,7 @@ const genDiffTree = (file1, file2 = {}) => {
         ...acc,
         [key]: {
           value: genDiffTree(currentValue1, currentValue2),
-          status: 'unchanged',
+          type: 'unchanged',
         },
       };
     }
@@ -47,7 +43,7 @@ const genDiffTree = (file1, file2 = {}) => {
     if (currentValue1 === currentValue2) {
       return {
         ...acc,
-        [key]: { value: currentValue1, status: 'unchanged' },
+        [key]: { value: currentValue1, type: 'unchanged' },
       };
     }
 
@@ -55,7 +51,7 @@ const genDiffTree = (file1, file2 = {}) => {
     const temp2 = _.isObject(currentValue2) ? genDiffTree(currentValue2) : currentValue2;
     return {
       ...acc,
-      [key]: { value1: temp1, value2: temp2, status: 'changed' },
+      [key]: { value1: temp1, value2: temp2, type: 'changed' },
     };
   }, {});
 

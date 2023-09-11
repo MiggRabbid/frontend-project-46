@@ -13,9 +13,9 @@ const getComplexOrQuotes = (value) => {
   return value;
 };
 
-const getString = (currentString, path, status, value) => {
+const getString = (currentString, path, type, value) => {
   const currentValue = getComplexOrQuotes(value);
-  switch (status) {
+  switch (type) {
     case 'unchanged':
       return currentString;
     case 'remote':
@@ -25,7 +25,7 @@ const getString = (currentString, path, status, value) => {
     case 'changed':
       return `${currentString}\nProperty '${path}' was updated. From ${currentValue[0]} to ${currentValue[1]}`;
     default:
-      throw new Error(`\nUnknown status: ${status}!`);
+      throw new Error(`\nUnknown type: ${type}!`);
   }
 };
 
@@ -34,20 +34,20 @@ const plain = (diffTree) => {
     const keys = Object.keys(tree);
     const result = keys.reduce((acc, key) => {
       const currentPath = path === '' ? `${key}` : `${path}.${key}`;
-      const { status } = tree[key];
+      const { type } = tree[key];
 
-      if (status === 'changed') {
+      if (type === 'changed') {
         const arrValue = [tree[key].value1, tree[key].value2];
-        return getString(acc, currentPath, status, arrValue);
+        return getString(acc, currentPath, type, arrValue);
       }
 
       const currentValue = tree[key].value;
       if (_.isObject(currentValue)) {
         const tempAcc = iter(tree[key].value, currentPath, acc);
-        return getString(tempAcc, currentPath, status, currentValue);
+        return getString(tempAcc, currentPath, type, currentValue);
       }
 
-      return getString(acc, currentPath, status, currentValue);
+      return getString(acc, currentPath, type, currentValue);
     }, currentString);
 
     return result;
