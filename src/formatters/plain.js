@@ -35,16 +35,20 @@ const plain = (diffTree) => {
     const keys = Object.keys(tree);
     const result = keys.reduce((acc, key) => {
       const currentPath = path === '' ? `${key}` : `${path}.${key}`;
-      const currentValue = _.cloneDeep(tree[key].value);
       const { status } = tree[key];
+
       if (status === 'changed') {
         const currentValue1 = _.cloneDeep(tree[key].value1);
         const currentValue2 = _.cloneDeep(tree[key].value2);
         return getString(acc, currentPath, status, [currentValue1, currentValue2]);
       }
+
+      const currentValue = _.cloneDeep(tree[key].value);
+
       if (_.isObject(currentValue) && !_.has(tree[key], 'status')) {
         return getString(acc, currentPath, status, currentValue);
       }
+
       if (_.isObject(currentValue)) {
         const tempAcc = iter(currentValue, currentPath, acc);
         return getString(tempAcc, currentPath, status, currentValue);
