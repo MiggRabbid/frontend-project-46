@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
-import readFile from '../src/parsers.js';
+import { readFile } from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

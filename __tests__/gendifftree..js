@@ -1,10 +1,11 @@
 /* eslint-disable no-undef */
-import YAML from 'yaml';
+
+import yaml from 'js-yaml';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
-import getFormattedDiff from '../src/formatters/getFromat.js';
-import genDiffTree from '../src/gendifftree.js';
+import getFormattedDiff from '../src/formatters/getFromat';
+import genDiffTree from '../src/gendifftree';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -37,12 +38,12 @@ test('Result with JSON', () => {
 });
 
 test('Result with YAML', () => {
-  const fileYaml1 = YAML.parse(readFileSync(filepathYaml1, 'utf-8'));
-  const fileYaml2 = YAML.parse(readFileSync(filepathYaml2, 'utf-8'));
+  const fileYaml1 = yaml.load(readFileSync(filepathYaml1, 'utf-8'));
+  const fileYaml2 = yaml.load(readFileSync(filepathYaml2, 'utf-8'));
   expect(genDiffTree(fileYaml1, fileYaml2)).toEqual(expected1);
 
-  const fileYml1 = YAML.parse(readFileSync(filepathYml1, 'utf-8'));
-  const fileYml2 = YAML.parse(readFileSync(filepathYml2, 'utf-8'));
+  const fileYml1 = yaml.load(readFileSync(filepathYml1, 'utf-8'));
+  const fileYml2 = yaml.load(readFileSync(filepathYml2, 'utf-8'));
   expect(genDiffTree(fileYml1, fileYml2)).toEqual(expected1);
 });
 

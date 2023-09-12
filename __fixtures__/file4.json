@@ -21,7 +21,9 @@
   "group1": {
     "foo": "bar",
     "baz": "bars",
-    "nest": "str"
+    "nest": {
+      "key": "value"
+    }
   },
 
   "group3": {
@@ -36,7 +38,7 @@
   "group4": {
     "default": "",
     "foo": null,
-    "isNested": false,
+    "isNested": "none",
     "key": false,
     "nest": {
       "bar": 0

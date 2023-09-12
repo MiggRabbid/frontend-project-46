@@ -4,58 +4,57 @@ const getComplexOrQuotes = (value) => {
   if (_.isString(value)) {
     return `'${value}'`;
   }
+
   if (Array.isArray(value)) {
     return [getComplexOrQuotes(value[0]), getComplexOrQuotes(value[1])];
   }
+
   if (_.isObject(value)) {
     return '[complex value]';
   }
+
   return value;
 };
 
-const getString = (currentString, path, status, value) => {
+const getString = (path, type, value) => {
   const currentValue = getComplexOrQuotes(value);
-  switch (status) {
+  switch (type) {
     case 'unchanged':
-    case undefined:
-      return currentString;
+      return '';
     case 'remote':
-      return `${currentString}\nProperty '${path}' was removed`;
+      return `\nProperty '${path}' was removed`;
     case 'added':
-      return `${currentString}\nProperty '${path}' was added with value: ${currentValue}`;
+      return `\nProperty '${path}' was added with value: ${currentValue}`;
     case 'changed':
-      return `${currentString}\nProperty '${path}' was updated. From ${currentValue[0]} to ${currentValue[1]}`;
+      return `\nProperty '${path}' was updated. From ${currentValue[0]} to ${currentValue[1]}`;
     default:
-      throw new Error(`Unknown status: ${status}!`);
+      throw new Error(`Unknown type: ${type}!`);
   }
 };
 
 const plain = (diffTree) => {
   const iter = (tree, path = '', currentString = '') => {
-    const keys = Object.keys(tree);
-    const result = keys.reduce((acc, key) => {
-      const currentPath = path === '' ? `${key}` : `${path}.${key}`;
-      const { status } = tree[key];
+    const { key, type } = tree;
 
-      if (status === 'changed') {
-        const currentValue1 = _.cloneDeep(tree[key].value1);
-        const currentValue2 = _.cloneDeep(tree[key].value2);
-        return getString(acc, currentPath, status, [currentValue1, currentValue2]);
-      }
+    if (key === 'root node') {
+      const { children } = tree;
+      const result = children.map((node) => iter(node, path, currentString)).join('');
+      return `${result}`;
+    }
 
-      const currentValue = _.cloneDeep(tree[key].value);
+    const currentPath = path === '' ? `${key}` : `${path}.${key}`;
 
-      if (_.isObject(currentValue) && !_.has(tree[key], 'status')) {
-        return getString(acc, currentPath, status, currentValue);
-      }
+    if (type === 'nested') {
+      const { children } = tree;
+      const result = children.map((node) => iter(node, currentPath, currentString)).join('');
+      return `\n${result.replace('\n', '')}`;
+    }
 
-      if (_.isObject(currentValue)) {
-        const tempAcc = iter(currentValue, currentPath, acc);
-        return getString(tempAcc, currentPath, status, currentValue);
-      }
-      return getString(acc, currentPath, status, currentValue);
-    }, currentString);
-    return result;
+    if (type === 'changed') {
+      return getString(currentPath, type, [tree.value1, tree.value2]);
+    }
+
+    return getString(currentPath, type, tree.value);
   };
   const diffString = iter(diffTree).replace('\n', '');
   return diffString;
