@@ -7,6 +7,7 @@ import getFormattedDiff from './formatters/getFromat.js';
 const readFile = (filepath) => {
   const extName = path.extname(filepath).slice(1);
   const fullPath = path.resolve(process.cwd(), filepath);
+
   const data = readFileSync(fullPath, 'utf-8');
 
   return parser(extName, data);
