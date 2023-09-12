@@ -1,61 +1,40 @@
 import _ from 'lodash';
 
-const genDiffTree = (file1, file2 = {}) => {
-  const keysFromFiles = _.uniq(Object.keys(file1).concat(Object.keys(file2)));
+const genDiffTree = (file1, file2) => {
+  const keysFromFiles = _.union(Object.keys(file1), Object.keys(file2));
   const sortKey = _.sortBy(keysFromFiles);
-  const diffTree = sortKey.reduce((acc, key) => {
-    if (_.has(file1, key) && !_.has(file2, key)) {
-      const currentValue = _.cloneDeep(file1[key]);
-      const temp = _.isObject(currentValue) ? genDiffTree(currentValue) : currentValue;
-      if (Object.keys(file2).length === 0) {
-        return {
-          ...acc,
-          [key]: { value: temp, type: 'unchanged' },
-        };
-      }
-      return {
-        ...acc,
-        [key]: { value: temp, type: 'remote' },
-      };
+  const diffTree = sortKey.flatMap((key) => {
+    if (!_.has(file2, key)) {
+      const currentValue = file1[key];
+      return { key, value: currentValue, type: 'remote' };
     }
 
-    if (!_.has(file1, key) && _.has(file2, key)) {
-      const currentValue = _.cloneDeep(file2[key]);
-      const temp = _.isObject(currentValue) ? genDiffTree(currentValue) : currentValue;
-      return {
-        ...acc,
-        [key]: { value: temp, type: 'added' },
-      };
+    if (!_.has(file1, key)) {
+      const currentValue = file2[key];
+      return { key, value: currentValue, type: 'added' };
     }
 
-    const currentValue1 = _.cloneDeep(file1[key]);
-    const currentValue2 = _.cloneDeep(file2[key]);
+    const currentValue1 = file1[key];
+    const currentValue2 = file2[key];
+
     if (_.isObject(currentValue1) && _.isObject(currentValue2)) {
       return {
-        ...acc,
-        [key]: {
-          value: genDiffTree(currentValue1, currentValue2),
-          type: 'unchanged',
-        },
+        key,
+        children: genDiffTree(currentValue1, currentValue2),
+        type: 'nested',
       };
     }
 
-    if (currentValue1 === currentValue2) {
-      return {
-        ...acc,
-        [key]: { value: currentValue1, type: 'unchanged' },
-      };
+    if (_.isEqual(currentValue1, currentValue2)) {
+      return { key, value: currentValue1, type: 'unchanged' };
     }
 
-    const temp1 = _.isObject(currentValue1) ? genDiffTree(currentValue1) : currentValue1;
-    const temp2 = _.isObject(currentValue2) ? genDiffTree(currentValue2) : currentValue2;
     return {
-      ...acc,
-      [key]: { value1: temp1, value2: temp2, type: 'changed' },
+      key, value1: currentValue1, value2: currentValue2, type: 'changed',
     };
   }, {});
 
   return diffTree;
 };
 
-export default genDiffTree;
+export default (file1, file2 = {}) => ({ key: 'root node', children: genDiffTree(file1, file2), type: 'nested' });
