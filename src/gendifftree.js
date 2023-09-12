@@ -3,7 +3,7 @@ import _ from 'lodash';
 const genDiffTree = (file1, file2) => {
   const keysFromFiles = _.union(Object.keys(file1), Object.keys(file2));
   const sortKey = _.sortBy(keysFromFiles);
-  const diffTree = sortKey.flatMap((key) => {
+  const diffTree = sortKey.map((key) => {
     if (!_.has(file2, key)) {
       return { key, value: file1[key], type: 'remote' };
     }
