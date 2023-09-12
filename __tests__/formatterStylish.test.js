@@ -106,10 +106,10 @@ test('Normal result', () => {
       - baz: bas
       + baz: bars
         foo: bar
-      - nest: {
+      - nest: str
+      + nest: {
             key: value
         }
-      + nest: str
     }
   - group2: {
         abc: 12345
@@ -130,8 +130,8 @@ test('Normal result', () => {
       + default: 
       - foo: 0
       + foo: null
-      - isNested: none
-      + isNested: false
+      - isNested: false
+      + isNested: none
       + key: false
         nest: {
           - bar: 

@@ -5,19 +5,17 @@ const genDiffTree = (file1, file2) => {
   const sortKey = _.sortBy(keysFromFiles);
   const diffTree = sortKey.flatMap((key) => {
     if (!_.has(file2, key)) {
-      const currentValue = file1[key];
-      return { key, value: currentValue, type: 'remote' };
+      return { key, value: file1[key], type: 'remote' };
     }
 
     if (!_.has(file1, key)) {
-      const currentValue = file2[key];
-      return { key, value: currentValue, type: 'added' };
+      return { key, value: file2[key], type: 'added' };
     }
 
     const currentValue1 = file1[key];
     const currentValue2 = file2[key];
 
-    if (_.isObject(currentValue1) && _.isObject(currentValue2)) {
+    if (_.isObject(file1[key]) && _.isObject(file2[key])) {
       return {
         key,
         children: genDiffTree(currentValue1, currentValue2),

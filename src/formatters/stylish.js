@@ -1,47 +1,56 @@
 import _ from 'lodash';
 
-const getIndent = (tabCounter) => ''.repeat(tabCounter + 2);
+const getIndent = (indentAcc) => ' '.repeat(indentAcc);
 
-const getString = (tabCounter, type, key, value) => {
+const getStringify = (value, indentAcc) => {
+  if (_.isObject(value)) {
+    const keys = Object.keys(value);
+    const string = keys.map((key) => `${getIndent(indentAcc + 4)}  ${key}: ${getStringify(value[key], indentAcc + 4)}`);
+    return `{\n${string.join('\n')}\n${getIndent(indentAcc + 2)}}`;
+  }
+
+  return value;
+};
+
+const getString = (indentAcc, type, key, value) => {
   switch (type) {
-    case undefined:
     case 'nested':
     case 'unchanged':
-      return `${getIndent(tabCounter)}  ${key}: ${value}\n`;
+      return `\n${getIndent(indentAcc)}  ${key}: ${getStringify(value, indentAcc)}`;
     case 'remote':
-      return `${getIndent(tabCounter)}- ${key}: ${value}\n`;
+      return `\n${getIndent(indentAcc)}- ${key}: ${getStringify(value, indentAcc)}`;
     case 'added':
-      return `${getIndent(tabCounter)}+ ${key}: ${value}\n`;
+      return `\n${getIndent(indentAcc)}+ ${key}: ${getStringify(value, indentAcc)}`;
     case 'changed':
-      return `${getIndent(tabCounter)}- ${key}: ${value[0]}\n${getIndent(tabCounter)}+ ${key}: ${value[1]}\n`;
+      return `${getString(indentAcc, 'remote', key, value[0])}${getString(indentAcc, 'added', key, value[1])}`;
     default:
       throw new Error(`Unknown type: ${type}!`);
   }
 };
 
 const stylish = (diffTree) => {
-  const iter = (tree, tabCounter) => {
-    console.log('tree.key - ', tree.key);
-    if (tree.key === 'root node') {
+  const iter = (tree, indentAcc) => {
+    const { key, type } = tree;
+
+    if (key === 'root node') {
       const { children } = tree;
-      const result = children.map((node) => iter(node, tabCounter + 2));
-      return `{\n${result}${' '.repeat(tabCounter - 1)}}`;
+      const result = children.map((node) => iter(node, indentAcc + 1)).join('');
+      return `{${result}\n}`;
     }
 
-    if (tree.type === 'nested') {
+    if (type === 'nested') {
       const { children } = tree;
-      const result = children.map((node) => iter(node, tabCounter + 2));
-      return result;
+      const value = `{${children.map((node) => iter(node, indentAcc + 4)).join('')}\n${getIndent(indentAcc + 2)}}`;
+      return getString(indentAcc, type, key, value);
     }
 
-    if (tree.type === 'changed') {
-      const result = getString(tabCounter, tree.type, tree.key, [tree.value1, tree.value1]);
-      return result;
+    if (type === 'changed') {
+      return getString(indentAcc, type, key, [tree.value1, tree.value2]);
     }
 
-    const result = getString(tabCounter, tree.type, tree.key, tree.value);
-    return result;
+    return getString(indentAcc, type, key, tree.value);
   };
+
   const diffString = iter(diffTree, 1);
   return diffString;
 };

@@ -4,8 +4,8 @@ import yaml from 'js-yaml';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
-import getFormattedDiff from '../src/formatters/getFromat.js';
-import genDiffTree from '../src/gendifftree.js';
+import getFormattedDiff from '../src/formatters/getFromat';
+import genDiffTree from '../src/gendifftree';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

@@ -7,20 +7,19 @@ import getFormattedDiff from './formatters/getFromat.js';
 const readFile = (filepath) => {
   const extName = path.extname(filepath).slice(1);
   const fullPath = path.resolve(process.cwd(), filepath);
+
   const data = readFileSync(fullPath, 'utf-8');
+
   return parser(extName, data);
 };
 
 const genDiff = (filepath1, filepath2, formatter = 'stylish') => {
   const file1 = readFile(filepath1);
   const file2 = readFile(filepath2);
+
   const diffTree = genDiffTree(file1, file2);
-  // console.log('=============================================');
-  // console.log('=============================================');
-  // console.log(JSON.stringify(diffTree, 1, '. '));
-  // console.log('=============================================');
-  // console.log('=============================================');
   const diff = getFormattedDiff(formatter, diffTree);
+
   return diff;
 };
 
