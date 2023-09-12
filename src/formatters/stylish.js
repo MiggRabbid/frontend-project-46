@@ -28,7 +28,6 @@ const getString = (indentAcc, type, key, value) => {
   }
 };
 
-const getStrWithoutStat = (tab, tabCounter, key, value) => `${tab.repeat(tabCounter + 1)}${key}: ${value}\n`;
 const stylish = (diffTree) => {
   const iter = (tree, indentAcc) => {
     const { key, type } = tree;

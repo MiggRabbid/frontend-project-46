@@ -63,9 +63,5 @@ test('Result with throw new Error', () => {
   function diffString() {
     plain(tree3);
   }
-<<<<<<< HEAD:__tests__/formatterPlain..js
-  expect(diffString).toThrow('Unknown status: \'wrong status\'!');
-=======
   expect(diffString).toThrow('Unknown type: wrongType!');
->>>>>>> edits:__tests__/formatterPlain.test.js
 });

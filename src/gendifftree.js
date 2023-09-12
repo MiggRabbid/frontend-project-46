@@ -35,4 +35,8 @@ const genDiffTree = (file1, file2) => {
   return diffTree;
 };
 
-export default (file1, file2 = {}) => ({ key: 'root node', children: genDiffTree(file1, file2), type: 'nested' });
+export default (file1, file2 = {}) => ({
+  key: 'root node',
+  children: genDiffTree(file1, file2),
+  type: 'nested',
+});
