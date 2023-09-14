@@ -17,7 +17,7 @@
           {
             "key": "setting2",
             "value": 200,
-            "type": "remote"
+            "type": "removed"
           },
           {
             "key": "setting3",
@@ -103,7 +103,7 @@
             "id": 45
           }
         },
-        "type": "remote"
+        "type": "removed"
       },
       {
         "key": "group3",
@@ -155,7 +155,7 @@
               {
                 "key": "isNested",
                 "value": true,
-                "type": "remote"
+                "type": "removed"
               }
             ],
             "type": "nested"
@@ -180,5 +180,5 @@
         "type": "unchanged"
       }
     ],
-    "type": "nested"
+    "type": "root"
   }

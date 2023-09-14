@@ -1,7 +1,18 @@
 /* eslint-disable no-undef */
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
-import { readFile } from '../src/index.js';
+import { readFileSync } from 'fs';
+import parser from '../src/parsers';
+
+const getExtName = (filepath) => path.extname(filepath).slice(1);
+const getFullPath = (filepath) => path.resolve(process.cwd(), filepath);
+
+const readFile = (filepath) => {
+  const extName = getExtName(filepath);
+  const fullPath = getFullPath(filepath);
+  const data = readFileSync(fullPath, 'utf-8');
+  return parser(extName, data);
+};
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
