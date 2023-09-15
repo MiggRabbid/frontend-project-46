@@ -11,12 +11,19 @@ const getStringify = (value, indentAcc) => {
   return value;
 };
 
-const getString = (indentAcc, tree) => {
+const getString = (tree, indentAcc = 1) => {
   const {
-    key, value, value1, value2, type,
+    key, children, value, value1, value2, type,
   } = tree;
   switch (type) {
+    case 'root':
+      return `{${children.flatMap((child) => getString(child, indentAcc)).join('')}\n}`;
     case 'nested':
+      return getString({
+        key,
+        value: `{${children.flatMap((child) => getString(child, indentAcc + 1)).join('')}\n  ${getIndent(indentAcc)}}`,
+        type: 'unchanged',
+      }, indentAcc);
     case 'unchanged':
       return `\n${getIndent(indentAcc)}  ${key}: ${getStringify(value, indentAcc)}`;
     case 'removed':
@@ -30,24 +37,4 @@ const getString = (indentAcc, tree) => {
   }
 };
 
-const stylish = (diffTree) => {
-  const iter = (tree, indentAcc = 1) => {
-    const { key, children, type } = tree;
-    switch (type) {
-      case 'root':
-        return `{${children.map((node) => iter(node, indentAcc)).join('')}\n}`;
-      case 'nested':
-        return getString(indentAcc, {
-          key,
-          value: `{${children.map((node) => iter(node, indentAcc + 1)).join('')}\n  ${getIndent(indentAcc)}}`,
-          type,
-        });
-      default:
-        return getString(indentAcc, tree);
-    }
-  };
-  const diffString = iter(diffTree);
-  return diffString;
-};
-
-export default stylish;
+export default (diffTree) => getString(diffTree);

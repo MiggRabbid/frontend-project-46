@@ -10,39 +10,28 @@ const getComplexOrQuotes = (value) => {
   return value;
 };
 
-const getString = (path, tree) => {
+const getString = (tree, path = '') => {
   const {
-    value, value1, value2, type,
+    key, children, value, value1, value2, type,
   } = tree;
+  const currentPath = (path === '' ? `${key}` : `${path}.${key}`).replace('root node.', '');
+
   switch (type) {
+    case 'root':
+      return `${children.map((node) => getString(node, currentPath)).join('')}`;
+    case 'nested':
+      return `\n${children.map((node) => getString(node, currentPath)).join('').replace('\n', '')}`;
     case 'unchanged':
       return '';
     case 'removed':
-      return `\nProperty '${path}' was removed`;
+      return `\nProperty '${currentPath}' was removed`;
     case 'added':
-      return `\nProperty '${path}' was added with value: ${getComplexOrQuotes(value)}`;
+      return `\nProperty '${currentPath}' was added with value: ${getComplexOrQuotes(value)}`;
     case 'changed':
-      return `\nProperty '${path}' was updated. From ${getComplexOrQuotes(value1)} to ${getComplexOrQuotes(value2)}`;
+      return `\nProperty '${currentPath}' was updated. From ${getComplexOrQuotes(value1)} to ${getComplexOrQuotes(value2)}`;
     default:
       throw new Error(`Unknown type: ${type}!`);
   }
 };
 
-const plain = (diffTree) => {
-  const iter = (tree, path = '', currentString = '') => {
-    const { key, children, type } = tree;
-    const currentPath = (path === '' ? `${key}` : `${path}.${key}`).replace('root node.', '');
-    switch (type) {
-      case 'root':
-        return `${children.map((node) => iter(node, path, currentString)).join('')}`;
-      case 'nested':
-        return `\n${children.map((node) => iter(node, currentPath, currentString)).join('').replace('\n', '')}`;
-      default:
-        return getString(currentPath, tree);
-    }
-  };
-  const diffString = iter(diffTree).replace('\n', '');
-  return diffString;
-};
-
-export default plain;
+export default (diffTree) => getString(diffTree).replace('\n', '');
