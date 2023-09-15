@@ -15,7 +15,6 @@ const getString = (tree, path = '') => {
     key, children, value, value1, value2, type,
   } = tree;
   const currentPath = (path === '' ? `${key}` : `${path}.${key}`).replace('root node.', '');
-
   switch (type) {
     case 'root':
       return `${children.map((node) => getString(node, currentPath)).join('')}`;
