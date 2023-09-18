@@ -1,8 +1,8 @@
 import { readFileSync } from 'fs';
 import path from 'node:path';
 import parser from './parsers.js';
-import genDiffTree from './gendDiffTree.js';
-import getFormattedDiff from './formatters/formatters.js';
+import genDiffTree from './genDiffTree.js';
+import getFormatteDiff from './formatters/formatters.js';
 
 const getExtName = (filepath) => path.extname(filepath).slice(1);
 const getFullPath = (filepath) => path.resolve(process.cwd(), filepath);
@@ -18,7 +18,7 @@ const genDiff = (filepath1, filepath2, formatter = 'stylish') => {
   const file1 = readFile(filepath1);
   const file2 = readFile(filepath2);
   const diffTree = genDiffTree(file1, file2);
-  const diff = getFormattedDiff(formatter, diffTree);
+  const diff = getFormatteDiff(formatter, diffTree);
   return diff;
 };
 
