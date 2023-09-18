@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import { readFileSync } from 'fs';
 import genDiff from '../src/index.js';
-import getFormatteDiff from '../src/formatters/formatters.js';
+import getFormattedDiff from '../src/formatters/formatters.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -58,7 +58,7 @@ test.each([
 }) => {
   const diffTree = JSON.parse(readFileSync(getFixturePath(fileDiffTree), 'utf-8'));
   function getError() {
-    getFormatteDiff(format, diffTree);
+    getFormattedDiff(format, diffTree);
   }
   expect(getError).toThrow(error);
 });
