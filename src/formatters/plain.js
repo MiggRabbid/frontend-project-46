@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const getComplexOrQuotes = (value) => {
+const getStringify = (value) => {
   if (_.isString(value)) {
     return `'${value}'`;
   }
@@ -10,11 +10,16 @@ const getComplexOrQuotes = (value) => {
   return value;
 };
 
+const gerCurrentPath = (path, key) => {
+  const currentPath = path === '' ? `${key}` : `${path}.${key}`;
+  return !currentPath.startsWith('root node') ? currentPath : currentPath.replace('root node.', '');
+};
+
 const getString = (tree, path = '') => {
   const {
     key, children, value, value1, value2, type,
   } = tree;
-  const currentPath = (path === '' ? `${key}` : `${path}.${key}`).replace('root node.', '');
+  const currentPath = gerCurrentPath(path, key);
   switch (type) {
     case 'root':
       return `${children.map((node) => getString(node, currentPath)).join('')}`;
@@ -25,9 +30,9 @@ const getString = (tree, path = '') => {
     case 'removed':
       return `\nProperty '${currentPath}' was removed`;
     case 'added':
-      return `\nProperty '${currentPath}' was added with value: ${getComplexOrQuotes(value)}`;
+      return `\nProperty '${currentPath}' was added with value: ${getStringify(value)}`;
     case 'changed':
-      return `\nProperty '${currentPath}' was updated. From ${getComplexOrQuotes(value1)} to ${getComplexOrQuotes(value2)}`;
+      return `\nProperty '${currentPath}' was updated. From ${getStringify(value1)} to ${getStringify(value2)}`;
     default:
       throw new Error(`Unknown type: ${type}!`);
   }
