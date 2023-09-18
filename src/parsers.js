@@ -1,16 +1,17 @@
 import yaml from 'js-yaml';
+import _ from 'lodash';
+
+const getError = (expectedExtName) => {
+  throw new Error(`Unknown extName: ${expectedExtName}!`);
+};
 
 const parser = (extName, data) => {
-  switch (extName) {
-    case 'json':
-      return JSON.parse(data);
-    case 'yaml':
-      return yaml.load(data);
-    case 'yml':
-      return yaml.load(data);
-    default:
-      throw new Error(`Unknown extName: ${extName}!`);
-  }
+  const formats = {
+    json: (expectedData) => JSON.parse(expectedData),
+    yaml: (expectedData) => yaml.load(expectedData),
+    yml: (expectedData) => yaml.load(expectedData),
+  };
+  return _.has(formats, extName) ? formats[extName](data) : getError(extName);
 };
 
 export default parser;
